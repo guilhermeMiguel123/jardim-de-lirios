@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #FDFBF7;
+    color: #2C352D;
+    overflow-x: hidden;
+  }
+}
+
+.font-serif-romantic {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-sans-clean {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@keyframes floatPetal {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.65;
+  }
+  85% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(105vh) translateX(45px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 5s ease-in-out infinite;
+}
