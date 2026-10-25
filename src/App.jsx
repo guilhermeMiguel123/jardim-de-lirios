@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { QUOTES, CATEGORIES, EYE_COMPLIMENTS } from './data/quotes';
 import { WhiteLilySVG, CornerGarlandSVG, FloatingPetals } from './components/LilyIllustrations';
+import Garden3D from './components/Garden3D';
 import { useDailyQuote } from './hooks/useDailyQuote';
 
 export default function App() {
@@ -298,6 +299,18 @@ export default function App() {
           </main>
         )}
 
+        {activeTab === 'garden3d' && (
+          <Garden3D
+            seenIds={state.seenIds}
+            favorites={state.favorites}
+            onToggleFavorite={toggleFavorite}
+            onOpenInMainCard={(id) => {
+              selectQuoteFromGarden(id);
+              setActiveTab('today');
+            }}
+          />
+        )}
+
         {(activeTab === 'garden' || activeTab === 'favorites') && (
           <section className="space-y-4">
             <div className="bg-white/85 backdrop-blur-md rounded-2xl p-4 border border-[#E5ECE7] shadow-2xs">
@@ -420,42 +433,54 @@ export default function App() {
       </div>
 
       {!isPostcardMode && (
-        <nav className="fixed bottom-4 inset-x-0 z-30 max-w-md mx-auto px-4">
-          <div className="bg-white/90 backdrop-blur-xl border border-[#DCE6DF] rounded-full shadow-[0_10px_30px_rgba(44,53,45,0.12)] p-1.5 grid grid-cols-3 gap-1">
+        <nav className="fixed bottom-4 inset-x-0 z-30 max-w-lg mx-auto px-3">
+          <div className="bg-white/90 backdrop-blur-xl border border-[#DCE6DF] rounded-full shadow-[0_10px_30px_rgba(44,53,45,0.12)] p-1.5 grid grid-cols-4 gap-1">
             <button
               onClick={() => setActiveTab('today')}
-              className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'today'
                   ? 'bg-[#3F5E4D] text-white shadow-xs'
                   : 'text-[#526356] hover:bg-[#F3F7F4]'
               }`}
             >
-              <Calendar className="w-4 h-4" />
-              <span>Flor de Hoje</span>
+              <Calendar className="w-4 h-4 shrink-0" />
+              <span className="truncate">Hoje</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('garden3d')}
+              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
+                activeTab === 'garden3d'
+                  ? 'bg-[#3F5E4D] text-white shadow-xs'
+                  : 'text-[#526356] hover:bg-[#F3F7F4]'
+              }`}
+            >
+              <Flower2 className="w-4 h-4 shrink-0" />
+              <span className="truncate">Ilha 3D</span>
             </button>
 
             <button
               onClick={() => setActiveTab('garden')}
-              className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'garden'
                   ? 'bg-[#3F5E4D] text-white shadow-xs'
                   : 'text-[#526356] hover:bg-[#F3F7F4]'
               }`}
             >
-              <Compass className="w-4 h-4" />
-              <span>Jardim ({progressCount})</span>
+              <Compass className="w-4 h-4 shrink-0" />
+              <span className="truncate">Lista ({progressCount})</span>
             </button>
 
             <button
               onClick={() => setActiveTab('favorites')}
-              className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'favorites'
                   ? 'bg-[#9D174D] text-white shadow-xs'
                   : 'text-[#526356] hover:bg-[#FDF2F8]'
               }`}
             >
-              <Bookmark className="w-4 h-4" />
-              <span>Favoritas ({state.favorites.length})</span>
+              <Bookmark className="w-4 h-4 shrink-0" />
+              <span className="truncate">Salvas ({state.favorites.length})</span>
             </button>
           </div>
         </nav>
