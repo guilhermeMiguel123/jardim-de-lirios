@@ -154,6 +154,24 @@ export default function App() {
 
         {activeTab === 'today' && (
           <main className="transition-all duration-500">
+            {progressCount >= 100 && !isPostcardMode && (
+              <div className="mb-6 p-5 rounded-[28px] bg-gradient-to-r from-[#9D174D] via-[#BE185D] to-[#D97706] text-white text-center shadow-xl animate-pulse border-2 border-[#FDE047]/60">
+                <h3 className="font-serif-romantic font-bold text-2xl mb-1">
+                  Todos os 100 Lírios Desabrocharam! ✨
+                </h3>
+                <p className="text-xs text-white/90 mb-4">
+                  O seu jardim está completo. Um presente especial e mágico nasceu no centro do lago na Ilha 3D.
+                </p>
+                <button
+                  onClick={() => setActiveTab('garden3d')}
+                  className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-white text-[#9D174D] hover:bg-[#FDF2F8] transition shadow-md cursor-pointer inline-flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Ir para o Jardim 3D 🌸💍</span>
+                </button>
+              </div>
+            )}
+
             <div
               className={`relative bg-white/85 backdrop-blur-xl rounded-[32px] border border-[#E8EFEA] shadow-[0_20px_60px_-15px_rgba(63,94,77,0.12)] overflow-hidden transition-all duration-300 ${
                 isBloomingAnim ? 'opacity-40 scale-98' : 'opacity-100 scale-100'

@@ -25,21 +25,19 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
   const [proposalAccepted, setProposalAccepted] = useState(() => {
     return localStorage.getItem('jardim_lirios_accepted') === 'true';
   });
-  const [forceTest100, setForceTest100] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   const audioCtxRef = useRef(null);
   const musicIntervalRef = useRef(null);
 
-  const isAllCompleted = seenIds.length >= QUOTES.length || forceTest100;
+  const isAllCompleted = seenIds.length >= QUOTES.length;
 
   const handleAcceptProposal = () => {
     setProposalAccepted(true);
     localStorage.setItem('jardim_lirios_accepted', 'true');
   };
 
-  // --- CAIXINHA DE MÚSICA ROMÂNTICA (Web Audio API) ---
   const toggleMusic = () => {
     if (isPlayingMusic) {
       if (musicIntervalRef.current) clearInterval(musicIntervalRef.current);
@@ -86,7 +84,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
 
         osc.connect(gain);
         gain.connect(ctx.destination);
-
         osc2.connect(gain2);
         gain2.connect(ctx.destination);
 
@@ -111,25 +108,20 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
     };
   }, []);
 
-  // --- MODO TELA CHEIA ---
   const toggleFullscreen = async () => {
     if (!isFullscreen) {
       setIsFullscreen(true);
       if (wrapperRef.current && wrapperRef.current.requestFullscreen) {
         try {
           await wrapperRef.current.requestFullscreen();
-        } catch {
-          // Fallback em CSS para iOS/Mobile
-        }
+        } catch {}
       }
     } else {
       setIsFullscreen(false);
       if (document.fullscreenElement && document.exitFullscreen) {
         try {
           await document.exitFullscreen();
-        } catch {
-          // Ignora
-        }
+        } catch {}
       }
     }
   };
@@ -144,7 +136,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
     return () => document.removeEventListener('fullscreenchange', onFsChange);
   }, []);
 
-  // --- CENA 3D (THREE.JS) ---
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
@@ -236,7 +227,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
     const clickableMeshes = [];
     const animatedLilies = [];
 
-    // --- LÍRIO GIGANTE CENTRAL (PEDIDO DE NAMORO AO COMPLETAR 100) ---
     let giantLilyGroup = null;
     let goldenRingMesh = null;
 
@@ -310,7 +300,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
 
           petal.userData = { isProposalLily: true };
           clickableMeshes.push(petal);
-
           pivot.add(petal);
           giantHead.add(pivot);
         }
@@ -341,7 +330,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
       islandGroup.add(giantLilyGroup);
     }
 
-    // --- OS 100 LÍRIOS DO JARDIM ---
     const stemMat = new THREE.MeshStandardMaterial({ color: '#4A6B57', flatShading: true });
     const leafMat = new THREE.MeshStandardMaterial({ color: '#5E8C6A', flatShading: true });
     const whitePetalMat = new THREE.MeshStandardMaterial({
@@ -373,7 +361,7 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
     const goldenAngle = 137.508 * (Math.PI / 180);
 
     QUOTES.forEach((quote, index) => {
-      const isUnlocked = seenIds.includes(quote.id) || forceTest100;
+      const isUnlocked = seenIds.includes(quote.id);
       const isFav = favorites.includes(quote.id);
 
       const radius = 2.85 + Math.sqrt((index + 1) / QUOTES.length) * 6.4;
@@ -420,7 +408,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
 
           petal.userData = { quoteId: quote.id };
           clickableMeshes.push(petal);
-
           petalPivot.add(petal);
           headGroup.add(petalPivot);
         }
@@ -451,7 +438,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
       islandGroup.add(flowerGroup);
     });
 
-    // --- 6 ABELHINHAS LOW POLY VOANDO ---
     const bees = [];
     const beeBodyMat = new THREE.MeshStandardMaterial({ color: '#FACC15', flatShading: true });
     const beeStripeMat = new THREE.MeshStandardMaterial({ color: '#1E293B', flatShading: true });
@@ -502,7 +488,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
       });
     }
 
-    // --- CHUVA DE PÉTALAS 3D CAINDO NO MAPA ---
     const fallingPetals = [];
     const fallingPetalGeo = new THREE.ConeGeometry(0.12, 0.26, 3);
     const fallingPetalWhiteMat = new THREE.MeshStandardMaterial({
@@ -542,7 +527,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
       });
     }
 
-    // Vaga-lumes Dourados
     const particlesCount = isAllCompleted ? 80 : 40;
     const positions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount; i++) {
@@ -728,7 +712,7 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
-  }, [seenIds, favorites, isAllCompleted, forceTest100, isFullscreen]);
+  }, [seenIds, favorites, isAllCompleted, isFullscreen]);
 
   const isSelectedFav = selectedQuote ? favorites.includes(selectedQuote.id) : false;
 
@@ -804,21 +788,6 @@ export default function Garden3D({ seenIds = [], favorites = [], onToggleFavorit
               </>
             )}
           </button>
-
-          {seenIds.length < QUOTES.length && (
-            <button
-              onClick={() => setForceTest100(!forceTest100)}
-              title="Simular 100/100 flores para ver o Lírio Gigante"
-              className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-medium border transition cursor-pointer ${
-                forceTest100
-                  ? 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]'
-                  : 'bg-[#F8FAF8] text-[#7A8B7E] border-[#E2EAE4] hover:bg-[#EEF3EF]'
-              }`}
-            >
-              <Crown className="w-3 h-3 text-[#D97706]" />
-              <span>{forceTest100 ? 'Sair Teste' : '100/100'}</span>
-            </button>
-          )}
         </div>
       </div>
 
