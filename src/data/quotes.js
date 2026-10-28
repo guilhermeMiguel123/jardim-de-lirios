@@ -1,23 +1,24 @@
-export const CATEGORIES = [
-  { id: 'all', label: 'Todas as Flores' },
-  { id: 'olhar', label: 'O Seu Olhar' },
-  { id: 'beleza', label: 'Sua Beleza' },
-  { id: 'literatura', label: 'Clássicos & Poesia' },
-  { id: 'cinema', label: 'Cena de Cinema' },
-  { id: 'musica', label: 'Melodia & Alma' },
+﻿export const CATEGORIES = [
+  { id: 'all', label: 'Todas as 500 Flores' },
+  { id: 'natal', label: 'Magia de Natal 🎄' },
+  { id: 'olhar', label: 'O Seu Olhar ✨' },
+  { id: 'beleza', label: 'Sua Beleza 🤍' },
+  { id: 'literatura', label: 'Clássicos & Poesia 📚' },
+  { id: 'cinema', label: 'Cena de Cinema 🎬' },
+  { id: 'musica', label: 'Melodia & Alma 🎵' },
 ];
 
 export const EYE_COMPLIMENTS = [
-  "Seus olhos têm a paz de um jardim de lírios brancos ao amanhecer e o brilho de todas as constelações.",
-  "Existe uma doçura no seu olhar que faz o mundo inteiro desacelerar só para te admirar.",
-  "A beleza do seu rosto é poesia pura, mas é no brilho dos seus olhos que o meu coração encontrou morada.",
-  "Nem o pintor mais talentoso da história conseguiria capturar a luz que nasce quando você me olha e sorri.",
-  "Cada vez que seus olhos cruzam os meus, sinto que acabei de descobrir o lugar mais bonito do universo.",
-  "Você carrega no olhar a delicadeza de uma pétala branca e a força de um amor que ilumina tudo ao redor.",
-  "Olhar para você é ter a certeza diária de que a perfeição existe e tem o formato do seu sorriso.",
+  "Seus olhos brilham mais do que todas as luzes de Natal refletidas na neve branca.",
+  "Existe uma doçura no seu olhar que aquece qualquer noite fria de dezembro.",
+  "A beleza do seu rosto é poesia pura, mas é no brilho dos seus olhos que mora a paz mais linda.",
+  "Nem a estrela mais alta da árvore de Natal consegue competir com a luz que nasce quando você sorri.",
+  "Cada vez que seus olhos cruzam os meus, sinto que recebi o presente mais precioso do universo.",
+  "Você carrega no olhar a pureza de um lírio branco na neve e o calor de um abraço inesquecível.",
+  "Olhar para você é ter a certeza diária de que a magia existe e tem o brilho do seu sorriso.",
 ];
 
-export const QUOTES = [
+const BASE_100_QUOTES = [
   { id: 1, text: "Nos teus olhos encontrei aquele brilho sereno que faz qualquer tempestade do mundo silenciar num instante.", author: "Inspirado em Machado de Assis", source: "Romance & Olhares Clássicos", category: "literatura" },
   { id: 2, text: "Se eu pudesse comparar a tua beleza a um dia de primavera, ainda faltariam flores para explicar a luz que nasce quando tu me olhas.", author: "Inspirado em William Shakespeare", source: "Sonetos de Amor Eterno", category: "literatura" },
   { id: 3, text: "Um simples volver dos teus olhos doces transforma um dia comum na mais bela poesia já escrita.", author: "Inspirado em Luís de Camões", source: "Lírica Clássica Portuguesa", category: "literatura" },
@@ -25,7 +26,7 @@ export const QUOTES = [
   { id: 5, text: "Teus olhos têm um feitiço calmo e luminoso: quanto mais eu os admiro, mais descubro razões para me encantar por ti.", author: "Inspirado em Jane Austen", source: "Crônicas de um Coração Encantado", category: "literatura" },
   { id: 6, text: "Daria o mundo inteiro só para guardar para sempre o instante exato em que o teu olhar encontra o meu.", author: "Inspirado em Florbela Espanca", source: "Sonetos de Paixão e Delicadeza", category: "literatura" },
   { id: 7, text: "Tua presença tem a pureza dos lírios brancos e o teu olhar carrega a própria luz das estrelas.", author: "Inspirado em Dante Alighieri", source: "Poesia Sublime", category: "literatura" },
-  { id: 8, text: "Basta que os teus olhos pousem sobre mim para que toda a minha alma floresça como um jardim em pleno abril.", author: "Inspirado em Victor Hugo", source: "Cartas Românticas", category: "literatura" },
+  { id: 8, text: "Basta que os teus olhos pousem sobre mim para que toda a minha alma floresça como um jardim em festa.", author: "Inspirado em Victor Hugo", source: "Cartas Românticas", category: "literatura" },
   { id: 9, text: "De todas as belezas que o tempo desenhou no universo, nenhuma tem a graça suave do teu olhar ao despertar.", author: "Inspirado em Castro Alves", source: "Poesia Romântica Brasileira", category: "literatura" },
   { id: 10, text: "A tua beleza não é apenas o que os olhos veem, mas a paz infinita que o teu olhar transmite a quem tem a sorte de estar perto de ti.", author: "Inspirado em Khalil Gibran", source: "Reflexões Poéticas da Alma", category: "literatura" },
   { id: 11, text: "Há nos teus olhos uma aurora inteira esperando para iluminar cada canto do meu dia.", author: "Inspirado em Olavo Bilac", source: "Via Láctea & Sonetos", category: "literatura" },
@@ -36,7 +37,7 @@ export const QUOTES = [
   { id: 16, text: "Perco-me com alegria no mistério doce dos teus olhos, pois sei que ali é o único lugar onde sempre me encontro.", author: "Inspirado em Gustavo Adolfo Bécquer", source: "Rimas e Lendas de Amor", category: "literatura" },
   { id: 17, text: "Uma coisa bela é uma alegria para sempre, e o teu olhar é a beleza que renova a minha alegria todas as manhãs.", author: "Inspirado em John Keats", source: "Odes à Beleza", category: "literatura" },
   { id: 18, text: "Se a poesia tivesse um rosto e um olhar, teria exatamente o desenho suave dos teus traços e a luz dos teus olhos.", author: "Inspirado em Percy Bysshe Shelley", source: "Versos Ao Entardecer", category: "literatura" },
-  { id: 19, text: "Nos teus olhos mora uma primavera que nunca termina, onde cada olhar teu faz nascer um novo lírio branco.", author: "Inspirado em Rabindranath Tagore", source: "O Jardineiro do Amor", category: "literatura" },
+  { id: 19, text: "Nos teus olhos mora um encanto que nunca termina, onde cada olhar teu faz nascer um novo lírio branco.", author: "Inspirado em Rabindranath Tagore", source: "O Jardineiro do Amor", category: "literatura" },
   { id: 20, text: "Nenhuma palavra escrita pelos poetas alcança o que os teus olhos dizem em um único segundo de silêncio.", author: "Inspirado em Rainer Maria Rilke", source: "Cartas para um Amor", category: "literatura" },
   { id: 21, text: "A luz que habita o teu olhar tem o dom raro de tornar mais bonito tudo aquilo que você contempla.", author: "Inspirado em Charlotte Brontë", source: "Romances da Alma", category: "literatura" },
   { id: 22, text: "Olhar nos teus olhos é como abrir uma janela para um jardim banhado pelo sol da manhã.", author: "Inspirado em Álvares de Azevedo", source: "Lira Romântica", category: "literatura" },
@@ -49,14 +50,14 @@ export const QUOTES = [
   { id: 29, text: "O jeito que os seus olhos sorriem antes mesmo dos seus lábios é o detalhe mais apaixonante que eu já vi em alguém.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 30, text: "Se a paz tivesse uma cor e uma direção, ela teria exatamente o tom e a profundidade do seu olhar.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 31, text: "Eu poderia passar horas em silêncio apenas observando como a luz dança nos seus olhos quando você fala do que ama.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
-  { id: 32, text: "Teu olhar tem a delicadeza de uma pétala de lírio branco tocando a água: suave, puro e inesquecível.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
+  { id: 32, text: "Teu olhar tem a delicadeza de uma pétala de lírio branco tocando a neve: suave, puro e inesquecível.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 33, text: "Não importa o quão nublado esteja o dia lá fora; basta encontrar o seu olhar para o sol nascer dentro de mim.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 34, text: "Seus olhos contam histórias de ternura e doçura que deixam qualquer coração completamente rendido.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 35, text: "Há um magnetismo único na forma como você olha o mundo: tudo ganha mais cor, mais vida e mais poesia através de você.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
-  { id: 36, text: "Cada pestanejar dos seus olhos é como o bater de asas de uma borboleta em um jardim cheio de flores brancas.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
+  { id: 36, text: "Cada pestanejar dos seus olhos é como o cair suave de um floco de neve em um jardim cheio de lírios brancos.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 37, text: "O seu olhar é o meu refúgio favorito: o lugar onde toda correria termina e todo o carinho começa.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 38, text: "Se me perguntassem qual é a vista mais bonita que já contemplei na vida, eu responderia sem hesitar: os seus olhos olhando para mim.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
-  { id: 39, text: "Você tem aquele olhar raro que mistura doçura de menina com a força encantadora de uma mulher inesquecível.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
+  { id: 39, text: "Você tem aquele olhar raro que mistura doçura encantadora com a força luminosa de uma mulher inesquecível.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 40, text: "Mesmo no meio de uma multidão inteira, os meus olhos sempre vão procurar a luz inconfundível do seu olhar.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 41, text: "No brilho dos seus olhos encontrei a certeza de que as coisas mais sagradas da vida são feitas de delicadeza.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 42, text: "Seu olhar tem o dom de transformar segundos comuns em memórias que eu quero guardar para a vida inteira.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
@@ -64,15 +65,15 @@ export const QUOTES = [
   { id: 44, text: "Seus olhos guardam uma serenidade tão linda que parecem ter sido desenhados à mão pelas próprias estrelas.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 45, text: "Basta um único olhar seu para desarmar qualquer cansaço e encher o meu peito de gratidão por você existir.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 46, text: "O brilho que nasce nos seus olhos quando você está feliz é o espetáculo mais bonito que eu conheço.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
-  { id: 47, text: "Seus olhos são dois espelhos de luz onde até os dias mais simples ganham brilho de festa.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
+  { id: 47, text: "Seus olhos são dois espelhos de luz onde até os dias mais simples ganham brilho de festa de Natal.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 48, text: "Nunca deixe de notar o poder que o seu olhar tem: ele ilumina, acolhe e deixa o mundo infinitamente mais bonito.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 49, text: "No silêncio entre uma palavra e outra, é a doçura do seu olhar que diz as frases mais bonitas.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
-  { id: 50, text: "Olhar nos seus olhos é como caminhar por um campo de lírios brancos sob a luz dourada do fim da tarde.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
+  { id: 50, text: "Olhar nos seus olhos é como caminhar por um campo de lírios brancos sob a luz dourada das estrelas.", author: "Jardim de Lírios", source: "Coleção Exclusiva — Para o Seu Olhar", category: "olhar" },
   { id: 51, text: "Assim como o lírio branco se destaca em qualquer jardim pela sua pureza e elegância, a sua beleza encanta sem precisar de esforço.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 52, text: "Você tem aquela beleza rara que não cansa os olhos: quanto mais o tempo passa, mais detalhes encantadores aparecem em você.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 53, text: "A sua beleza começa na suavidade dos seus traços, passa pelo brilho do seu olhar e transborda na bondade do seu coração.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 54, text: "Hoje um novo lírio branco abriu apenas para te lembrar o quanto você é extraordinariamente linda, por dentro e por fora.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
-  { id: 55, text: "Existe uma elegância natural em cada gesto seu, como se a própria primavera tivesse escolhido você para morar.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
+  { id: 55, text: "Existe uma elegância natural em cada gesto seu, como se a própria poesia tivesse escolhido você para morar.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 56, text: "Nem todas as flores do mundo reunidas conseguiriam explicar a delicadeza que existe no desenho do seu sorriso.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 57, text: "Você é a prova viva de que a beleza mais inesquecível é aquela que vem acompanhada de um olhar cheio de luz.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 58, text: "Quando você chega, o ambiente inteiro muda de tom, como se uma brisa suave trouxesse o perfume de lírios frescos.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
@@ -82,7 +83,7 @@ export const QUOTES = [
   { id: 62, text: "Você fica linda quando se produz inteira, mas fica ainda mais deslumbrante quando está distraída sendo apenas você mesma.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 63, text: "Há uma harmonia perfeita entre a doçura da sua voz, a leveza do seu sorriso e a profundidade do seu olhar.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 64, text: "Que hoje você se olhe no espelho com a mesma admiração encantada com que os meus olhos te veem todos os dias.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
-  { id: 65, text: "A sua beleza tem a serenidade das manhãs de sol e o mistério encantador das noites estreladas.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
+  { id: 65, text: "A sua beleza tem a serenidade das manhãs nevadas e o mistério encantador das noites estreladas de Natal.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 66, text: "Cada detalhe do seu rosto parece ter sido pensado com calma e carinho para transmitir paz e encanto.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 67, text: "O lírio branco simboliza a nobreza da alma e a beleza pura — exatamente tudo o que transborda em você.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 68, text: "Não existe filtro ou fotografia que consiga capturar 100% da luz real que você emana pessoalmente.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
@@ -91,31 +92,106 @@ export const QUOTES = [
   { id: 71, text: "Entre milhares de flores no jardim da vida, você sempre será o lírio mais raro, luminoso e especial.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 72, text: "O seu sorriso ilumina o rosto inteiro, mas é o brilho que sobe para os seus olhos que torna você única.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 73, text: "Você carrega uma beleza atemporal, daquelas que inspiravam pintores e poetas através dos séculos.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
-  { id: 74, text: "Delicada como uma flor de lírio, radiante como o sol da manhã e dona do olhar mais lindo que existe.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
+  { id: 74, text: "Delicada como uma flor de lírio, radiante como a estrela de Natal e dona do olhar mais lindo que existe.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 75, text: "Nunca se esqueça do quão rara e preciosa é a sua beleza: o mundo fica muito mais bonito porque você está nele.", author: "Poética das Flores", source: "Herbário Romântico — Lírios Brancos", category: "beleza" },
   { id: 76, text: "Se a nossa vida fosse um filme de romance, a minha cena favorita seria sempre o close em câmera lenta no seu olhar.", author: "Cinema Romântico", source: "Inspirado em 'Questão de Tempo' (About Time)", category: "cinema" },
   { id: 77, text: "Mesmo que eu pudesse viajar no tempo e reviver qualquer dia da história, eu voltaria sempre para os dias em que vejo você sorrir.", author: "Cinema Romântico", source: "Inspirado em 'Questão de Tempo' (About Time)", category: "cinema" },
-  { id: 78, text: "Em qualquer estação, sob sol ou chuva, o jeito que os seus olhos brilham continua sendo a minha imagem favorita.", author: "Cinema Romântico", source: "Inspirado em 'Diário de uma Paixão' (The Notebook)", category: "cinema" },
-  { id: 79, text: "Você enfeitiçou meu corpo e minha alma desde o instante em que vi a doçura e a coragem que moram nos seus olhos.", author: "Cinema Romântico", source: "Inspirado em 'Orgulho e Preconceito'", category: "cinema" },
-  { id: 80, text: "Conhecer você foi como ver um filme em preto e branco ganhar todas as cores da primavera em um único segundo.", author: "Cinema Romântico", source: "Inspirado em 'La La Land — Cantando Estações'", category: "cinema" },
-  { id: 81, text: "As melhores conversas da vida são aquelas em que a gente nem precisa de legenda, porque os seus olhos já dizem tudo.", author: "Cinema Romântico", source: "Inspirado em 'Antes do Amanhecer' (Before Sunrise)", category: "cinema" },
+  { id: 78, text: "Em qualquer estação, sob sol ou neve, o jeito que os seus olhos brilham continua sendo a minha imagem favorita.", author: "Cinema Romântico", source: "Inspirado em 'Diário de uma Paixão' (The Notebook)", category: "cinema" },
+  { id: 79, text: "Você encantou minha alma desde o instante em que vi a doçura e a coragem que moram nos seus olhos.", author: "Cinema Romântico", source: "Inspirado em 'Orgulho e Preconceito'", category: "cinema" },
+  { id: 80, text: "Conhecer você foi como ver um filme em preto e branco ganhar todas as luzes douradas de Natal em um segundo.", author: "Cinema Romântico", source: "Inspirado em 'La La Land'", category: "cinema" },
+  { id: 81, text: "As melhores conversas da vida são aquelas em que a gente nem precisa de legenda, porque os seus olhos já dizem tudo.", author: "Cinema Romântico", source: "Inspirado em 'Antes do Amanhecer'", category: "cinema" },
   { id: 82, text: "No meio de toda a agitação do mundo, quando você olha para mim é como se a trilha sonora mais suave começasse a tocar.", author: "Cinema Romântico", source: "Inspirado em 'Um Lugar Chamado Notting Hill'", category: "cinema" },
-  { id: 83, text: "Há olhares que duram três segundos na tela, mas ficam guardados na memória do coração pelo resto da vida.", author: "Cinema Romântico", source: "Inspirado em 'Desejo e Reparação'", category: "cinema" },
-  { id: 84, text: "Se eu tivesse que escolher uma única lembrança para guardar para a eternidade, seria o brilho dos seus olhos num dia feliz.", author: "Cinema Romântico", source: "Inspirado em 'Brilho Eterno de uma Mente sem Lembranças'", category: "cinema" },
+  { id: 83, text: "Há olhares que duram três segundos na tela, mas ficam guardados na memória do coração pelo resto da vida.", author: "Cinema Romântico", source: "Inspirado em 'O Amor Não Tira Férias'", category: "cinema" },
+  { id: 84, text: "Se eu tivesse que escolher uma única lembrança para guardar para a eternidade, seria o brilho dos seus olhos sob as luzes de inverno.", author: "Cinema Romântico", source: "Inspirado em 'Brilho Eterno de uma Mente sem Lembranças'", category: "cinema" },
   { id: 85, text: "Você tem o encanto das protagonistas clássicas: basta entrar em cena para roubar toda a atenção e iluminar tudo.", author: "Cinema Romântico", source: "Inspirado em 'Bonequinha de Luxo'", category: "cinema" },
-  { id: 86, text: "Prefiro dividir uma única vida admirando o seu olhar do que enfrentar todas as eras deste mundo sozinho.", author: "Cinema Romântico", source: "Inspirado em 'O Senhor dos Anéis — Arwen & Aragorn'", category: "cinema" },
-  { id: 87, text: "Quando você sorri e me olha de lado, até o roteirista mais criativo do cinema ficaria sem palavras.", author: "Cinema Romântico", source: "Inspirado em 'Meia-Noite em Paris'", category: "cinema" },
+  { id: 86, text: "Prefiro admirar a luz serena do seu olhar em cada dia comum do que qualquer tesouro de fantasia.", author: "Cinema Romântico", source: "Inspirado em 'Simplesmente Amor' (Love Actually)", category: "cinema" },
+  { id: 87, text: "Quando você sorri e me olha de lado, até o roteirista mais criativo do cinema ficaria sem palavras.", author: "Cinema Romântico", source: "Inspirado em 'Escrito nas Estrelas' (Serendipity)", category: "cinema" },
   { id: 88, text: "Todas as cartas de amor já escritas no cinema parecem falar exatamente sobre a delicadeza que existe em você.", author: "Cinema Romântico", source: "Inspirado em 'Cartas para Julieta'", category: "cinema" },
   { id: 89, text: "Quando a luz dos olhos teus e a luz dos olhos meus resolvem se encontrar, o mundo inteiro vira poesia e canção.", author: "Poesia & Melodia", source: "Inspirado na Bossa Nova & Tom Jobim / Vinícius", category: "musica" },
-  { id: 90, text: "Olha que coisa mais linda, mais cheia de graça: é você transformando cada caminho por onde passa em um jardim de flores.", author: "Poesia & Melodia", source: "Inspirado na Bossa Nova Clássica", category: "musica" },
+  { id: 90, text: "Olha que coisa mais linda, mais cheia de graça: é você transformando cada caminho por onde passa em um jardim iluminado.", author: "Poesia & Melodia", source: "Inspirado na Bossa Nova Clássica", category: "musica" },
   { id: 91, text: "O seu olhar tem o acorde perfeito daquela música calma que a gente coloca no repeat porque nunca cansa de ouvir.", author: "Poesia & Melodia", source: "Inspirado na MPB Romântica", category: "musica" },
   { id: 92, text: "Nos seus olhos mora uma melodia doce que acalma qualquer pensamento e traz paz imediata para a alma.", author: "Poesia & Melodia", source: "Inspirado em Canções de Amor Acústicas", category: "musica" },
   { id: 93, text: "Você é a rima mais bonita e o verso mais sincero que a vida compôs para alegrar os meus dias.", author: "Poesia & Melodia", source: "Inspirado em Djavan & Poesia Brasileira", category: "musica" },
   { id: 94, text: "Do jeito que você me olha, até o silêncio entre nós dois soa como a sinfonia mais perfeita já tocada.", author: "Poesia & Melodia", source: "Inspirado em Clássicos Românticos", category: "musica" },
-  { id: 95, text: "Teu olhar é como sol de manhã de domingo: preguiçoso, dourado, acolhedor e impossível de não amar.", author: "Poesia & Melodia", source: "Inspirado em Melodias de Primavera", category: "musica" },
+  { id: 95, text: "Teu olhar é como manhã de Natal: luminoso, dourado, acolhedor e impossível de não amar.", author: "Poesia & Melodia", source: "Inspirado em Melodias Natalinas", category: "musica" },
   { id: 96, text: "Se cada estrela do céu fosse uma nota musical, ainda faltaria melodia para descrever a beleza dos seus olhos.", author: "Poesia & Melodia", source: "Inspirado em Serenatas ao Luar", category: "musica" },
-  { id: 97, text: "Você tem a leveza de uma valsa suave e a beleza pura de um buquê de lírios brancos recém-colhidos.", author: "Poesia & Melodia", source: "Inspirado em Valsas Poéticas", category: "musica" },
+  { id: 97, text: "Você tem a leveza de uma valsa na neve e a beleza pura de um buquê de lírios brancos recém-colhidos.", author: "Poesia & Melodia", source: "Inspirado em Valsas de Inverno", category: "musica" },
   { id: 98, text: "Todo dia ao acordar tenho uma certeza nova: não existe no mundo olhar mais doce, profundo e encantador que o seu.", author: "Poesia & Melodia", source: "Inspirado em Canções de Alvorada", category: "musica" },
-  { id: 99, text: "Que cada pétala branca deste jardim lembre você de que a sua beleza ilumina tudo ao redor como uma canção de amor.", author: "Poesia & Melodia", source: "Inspirado em Sinfonia das Flores", category: "musica" },
-  { id: 100, text: "Cem lírios brancos floresceram para celebrar você, mas o meu encanto pelo brilho do seu olhar está apenas no primeiro dia da eternidade.", author: "Jardim de Lírios — Citação nº 100", source: "Dedicatória Especial do Nosso Jardim", category: "olhar" }
+  { id: 99, text: "Que cada pétala branca deste jardim lembre você de que a sua beleza ilumina tudo ao redor como uma canção de Natal.", author: "Poesia & Melodia", source: "Inspirado em Sinfonia das Flores", category: "musica" },
+  { id: 100, text: "Cada lírio branco que floresce na neve celebra a ternura do seu sorriso e o encanto eterno do seu olhar.", author: "Jardim de Lírios", source: "Crônicas de Natal e Lírios Brancos", category: "natal" }
 ];
+
+// Gerador determinístico de mais 400 citações poéticas exclusivas (101 a 500)
+const OPENINGS = [
+  "Sob o brilho suave das estrelas de Natal, percebo que",
+  "Assim como a neve abraça delicadamente os lírios brancos,",
+  "No silêncio mágico desta noite iluminada, sinto que",
+  "Entre todas as luzes douradas que enfeitam o inverno,",
+  "Quando o vento frio sopra lá fora e encontro o teu rosto,",
+  "Contemplar a serenidade que mora nas tuas pupilas revela que",
+  "Cada pétala branca que desabrocha neste jardim sussurra que",
+  "Mesmo nas noites mais geladas de dezembro, descobre-se que",
+  "Como uma canção suave tocada ao pé da árvore iluminada,",
+  "Se os poetas antigos vissem a doçura dos teus cílios, diriam que",
+  "Na harmonia perfeita entre o teu sorriso e a tua voz, nota-se que",
+  "Quando uma estrela cadente cruza o céu sobre a nossa ilha,",
+  "Olhando de perto a delicadeza singular dos teus traços, entendo que",
+  "Diante do espelho cristalino do lago congelado, reflete-se que",
+  "Como o perfume raro de um lírio recém-aberto pela manhã,",
+  "Em cada detalhe luminoso que compõe a tua presença, vê-se que",
+  "Enquanto os sinos de Natal ecoam melodias de esperança,",
+  "Mais encantador do que qualquer conto de fadas de inverno é saber que",
+  "Ao observar o jeito meigo como os teus olhos sorriem, percebo que",
+  "Como um presente raro guardado com todo carinho pelo universo,"
+];
+
+const CORES = [
+  "o brilho do teu olhar acende uma primavera inteira dentro do coração",
+  "a tua beleza natural supera qualquer obra-prima já esculpida no mundo",
+  "a luz que nasce nos teus olhos transforma qualquer instante em eternidade",
+  "a pureza do teu sorriso tem a mesma nobreza dos lírios brancos em flor",
+  "o teu olhar carrega o calor mais acolhedor de todas as manhãs de festa",
+  "a suavidade do teu rosto é o verso mais bonito que a vida já escreveu",
+  "o encanto que transborda das tuas pupilas faz o tempo parar para te admirar",
+  "a delicadeza do teu jeito ilumina a alma como mil velas acesas na neve",
+  "a ternura escondida no teu olhar é o refúgio mais seguro e doce que existe",
+  "a graça radiante da tua presença deixa o universo inteiro mais poético",
+  "o reflexo dourado nos teus olhos guarda o segredo da verdadeira beleza",
+  "cada gesto teu espalha uma paz cristalina que encanta quem está ao redor",
+  "o desenho suave do teu olhar merece ser celebrado em quinhentos poemas",
+  "a luz própria que você emana faz até as estrelas do céu sentirem admiração",
+  "o mistério doce dos teus olhos é a melodia mais perfeita deste jardim",
+  "a elegância serena do teu olhar veste o mundo de esperança e harmonia",
+  "o toque de luz no teu sorriso derrete qualquer inverno num segundo",
+  "a beleza rara da tua alma transparece em cada piscar dos teus olhos",
+  "o teu olhar é como um farol suave guiando os sonhos mais bonitos",
+  "a doçura infinita que habita em você é o maior milagre de cada dia"
+];
+
+const SOURCES_POOL = [
+  { author: "Contos de Inverno & Lírios", source: "Antologia Natalina para o Seu Olhar", category: "natal" },
+  { author: "Jardim de Lírios — Edição de Natal", source: "Poemas da Estrela Guia & Flores Brancas", category: "natal" },
+  { author: "Crônicas da Neve & Poesia", source: "Cartas sob a Árvore Iluminada", category: "natal" },
+  { author: "Poética do Olhar", source: "Cadernos de Luz e Delicadeza", category: "olhar" },
+  { author: "Herbário Real dos Lírios", source: "500 Flores para Sua Beleza", category: "beleza" },
+  { author: "Inspirado em Clássicos de Natal", source: "Contos de Luz e Esperança", category: "literatura" },
+  { author: "Cinema & Neve Romântica", source: "Roteiros de Inverno Inesquecíveis", category: "cinema" },
+  { author: "Sinfonia de Dezembro", source: "Caixinha de Música & Harpa", category: "musica" }
+];
+
+const EXTRA_400_QUOTES = Array.from({ length: 400 }).map((_, idx) => {
+  const id = 101 + idx;
+  const openIdx = idx % OPENINGS.length;
+  const coreIdx = Math.floor(idx / OPENINGS.length) % CORES.length;
+  const meta = SOURCES_POOL[idx % SOURCES_POOL.length];
+
+  return {
+    id,
+    text: `${OPENINGS[openIdx]} ${CORES[coreIdx]}.`,
+    author: meta.author,
+    source: `${meta.source} — Vol. ${(idx % 12) + 1}`,
+    category: meta.category
+  };
+});
+
+export const QUOTES = [...BASE_100_QUOTES, ...EXTRA_400_QUOTES];
