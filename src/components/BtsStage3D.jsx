@@ -3,12 +3,15 @@ import * as THREE from 'three';
 import {
   Sparkles,
   Music,
+  Play,
+  Pause,
   Maximize2,
   Minimize2,
   RotateCw,
   Video,
   Flame,
-  Users
+  Users,
+  Disc
 } from 'lucide-react';
 
 const BTS_MEMBERS = [
@@ -139,7 +142,7 @@ export default function BtsStage3D() {
 
   const [focusedMember, setFocusedMember] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showPlayer, setShowPlayer] = useState(true);
+  const [isPlayingMusic, setIsPlayingMusic] = useState(true);
   const [cameraMode, setCameraMode] = useState('director');
 
   const focusedMemberRef = useRef(null);
@@ -186,7 +189,6 @@ export default function BtsStage3D() {
     const width = container.clientWidth || 800;
     const height = container.clientHeight || 500;
 
-    // 1. CENA E RENDERIZADOR HIGH-DEFINITION
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#05020A');
     scene.fog = new THREE.FogExp2('#05020A', 0.018);
@@ -206,8 +208,7 @@ export default function BtsStage3D() {
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // 2. ILUMINAÇÃO CINEMATOGRÁFICA DE SHOW
-    const ambientLight = new THREE.AmbientLight('#F3E8FF', 1.3);
+    const ambientLight = new THREE.AmbientLight('#F3E8FF', 1.25);
     scene.add(ambientLight);
 
     const keyLight = new THREE.DirectionalLight('#FFFDF9', 2.2);
@@ -229,7 +230,6 @@ export default function BtsStage3D() {
     purpleStageLight.position.set(6, 5, 3);
     scene.add(purpleStageLight);
 
-    // 3. PALCO DE ARENA ESPELHADO + TELÃO "FYA"
     const stageGroup = new THREE.Group();
     scene.add(stageGroup);
 
@@ -330,7 +330,7 @@ export default function BtsStage3D() {
       laserBeams.push({ mesh: beam, phase: i * 0.8 });
     });
 
-    // 4. GERADOR DE CABELOS EM MECHAS (HIGH-POLY STRAND SYSTEM)
+    // --- CORREÇÃO DO CABELO (POSICIONAMENTO CORRETO NA CABEÇA) ---
     const createDetailedIdolHair = (style, colorHex) => {
       const hairGroup = new THREE.Group();
       const hairMat = new THREE.MeshPhysicalMaterial({
@@ -342,54 +342,49 @@ export default function BtsStage3D() {
       });
 
       const scalp = new THREE.Mesh(
-        new THREE.SphereGeometry(0.242, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.62),
+        new THREE.SphereGeometry(0.235, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.58),
         hairMat
       );
-      scalp.position.y = 0.02;
-      scalp.scale.set(1.02, 1.05, 1.04);
+      scalp.position.set(0, 0.03, -0.01);
       hairGroup.add(scalp);
 
       const dynamicStrands = [];
-      const strandCount = 26;
+      const strandCount = 24;
 
       for (let i = 0; i < strandCount; i++) {
         const angle = (i / strandCount) * Math.PI * 2;
-        const isFront = Math.cos(angle) > 0.25;
-        const isBack = Math.cos(angle) < -0.3;
+        const isFront = Math.cos(angle) > 0.2;
 
         const strandPivot = new THREE.Group();
         strandPivot.position.set(
-          Math.sin(angle) * 0.215,
-          0.11 + Math.sin(i * 1.7) * 0.02,
-          Math.cos(angle) * 0.225
+          Math.sin(angle) * 0.2,
+          0.14 + Math.sin(i * 1.5) * 0.015,
+          Math.cos(angle) * 0.21
         );
 
-        let length = 0.22;
-        let width = 0.058;
-        if (style === 'wavyLong' && isBack) length = 0.34;
-        if (style === 'wavyPerm') width = 0.068;
-        if (style === 'sweptBack' && isFront) length = 0.18;
+        let length = 0.18;
+        let width = 0.052;
+        if (style === 'wavyLong' && !isFront) length = 0.28;
+        if (style === 'wavyPerm') width = 0.06;
 
         const strandGeo = new THREE.CapsuleGeometry(width, length, 8, 16);
         const strandMesh = new THREE.Mesh(strandGeo, hairMat);
-        strandMesh.scale.set(1, 1, 0.42);
-        strandMesh.position.y = -length * 0.42;
+        strandMesh.scale.set(1, 1, 0.4);
+        strandMesh.position.y = -length * 0.4;
 
         strandPivot.rotation.y = angle;
         if (isFront) {
           if (style === 'sweptBack') {
-            strandPivot.rotation.x = -0.55;
-            strandPivot.rotation.z = (Math.sin(angle) > 0 ? 1 : -1) * 0.35;
+            strandPivot.rotation.x = -0.45;
           } else if (style === 'foreheadComma' || style === 'silkyParted') {
             const side = Math.sin(angle) >= 0 ? 1 : -1;
-            strandPivot.rotation.x = 0.28;
-            strandPivot.rotation.z = side * 0.42;
+            strandPivot.rotation.x = 0.22;
+            strandPivot.rotation.z = side * 0.35;
           } else {
-            strandPivot.rotation.x = 0.32;
-            strandPivot.rotation.z = Math.sin(i) * 0.22;
+            strandPivot.rotation.x = 0.25;
           }
         } else {
-          strandPivot.rotation.x = 0.22;
+          strandPivot.rotation.x = 0.18;
         }
 
         strandPivot.add(strandMesh);
@@ -399,14 +394,13 @@ export default function BtsStage3D() {
           pivot: strandPivot,
           baseRotX: strandPivot.rotation.x,
           baseRotZ: strandPivot.rotation.z,
-          phase: i * 0.45,
+          phase: i * 0.4,
         });
       }
 
       return { hairGroup, dynamicStrands };
     };
 
-    // 5. CONSTRUÇÃO DOS 7 INTEGRANTES HIGH-POLY COM EXPRESSÕES FACIAIS E 16 ARTICULAÇÕES
     const dancerRigs = [];
     const clickableMeshes = [];
 
@@ -417,21 +411,12 @@ export default function BtsStage3D() {
       clearcoat: 0.25,
       clearcoatRoughness: 0.4,
     });
-    const blushMat = new THREE.MeshBasicMaterial({
-      color: '#F43F5E',
-      transparent: true,
-      opacity: 0.18,
-    });
+    const blushMat = new THREE.MeshBasicMaterial({ color: '#F43F5E', transparent: true, opacity: 0.18 });
     const scleraMat = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
     const pupilMat = new THREE.MeshBasicMaterial({ color: '#09090B' });
     const lipMat = new THREE.MeshStandardMaterial({ color: '#E15B64', roughness: 0.35 });
     const teethMat = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
-    const shoeMat = new THREE.MeshPhysicalMaterial({
-      color: '#09090B',
-      roughness: 0.15,
-      metalness: 0.4,
-      clearcoat: 0.9,
-    });
+    const shoeMat = new THREE.MeshPhysicalMaterial({ color: '#09090B', roughness: 0.15, metalness: 0.4 });
 
     BTS_MEMBERS.forEach((m, index) => {
       const root = new THREE.Group();
@@ -451,18 +436,8 @@ export default function BtsStage3D() {
       floorSpot.position.y = 0.02;
       root.add(floorSpot);
 
-      const suitMat = new THREE.MeshPhysicalMaterial({
-        color: m.suitColor,
-        roughness: 0.42,
-        metalness: 0.15,
-        clearcoat: 0.2,
-      });
-      const lapelMat = new THREE.MeshPhysicalMaterial({
-        color: m.lapelColor,
-        roughness: 0.25,
-        metalness: 0.3,
-        clearcoat: 0.5,
-      });
+      const suitMat = new THREE.MeshPhysicalMaterial({ color: m.suitColor, roughness: 0.42, metalness: 0.15 });
+      const lapelMat = new THREE.MeshPhysicalMaterial({ color: m.lapelColor, roughness: 0.25, metalness: 0.3 });
       const shirtMat = new THREE.MeshStandardMaterial({ color: m.shirtColor, roughness: 0.35 });
       const tieMat = new THREE.MeshStandardMaterial({ color: m.tieColor, roughness: 0.3 });
 
@@ -730,7 +705,6 @@ export default function BtsStage3D() {
       });
     });
 
-    // 6. MAR DE ARMY BOMBS NA ARENA
     const armyBombCount = 240;
     const bombPos = new Float32Array(armyBombCount * 3);
     for (let i = 0; i < armyBombCount; i++) {
@@ -749,7 +723,6 @@ export default function BtsStage3D() {
     const armyBombs = new THREE.Points(bombGeo, bombMat);
     scene.add(armyBombs);
 
-    // 7. CONTROLES DE CÂMERA E CLIQUE FANCAM
     let isDragging = false;
     let prevPos = { x: 0, y: 0 };
     let pointerDownPos = { x: 0, y: 0 };
@@ -806,7 +779,6 @@ export default function BtsStage3D() {
     window.addEventListener('pointerup', onPointerUp);
     domElem.addEventListener('wheel', onWheel, { passive: false });
 
-    // 8. MOTOR BIOMECÂNICO DE DANÇA, FÍSICA DE CABELO E EXPRESSÕES FACIAIS
     let animFrameId;
     const clock = new THREE.Clock();
 
@@ -865,195 +837,88 @@ export default function BtsStage3D() {
         const browLift = Math.sin(beat * 0.5 + index) * 0.008;
         eyebrows[0].mesh.position.y = 0.052 + browLift;
         eyebrows[1].mesh.position.y = 0.052 + (isWinking ? 0.012 : browLift);
-        eyebrows[0].mesh.rotation.z = Math.PI / 2 - 0.08 + Math.cos(beat * 0.5) * 0.06;
-        eyebrows[1].mesh.rotation.z = Math.PI / 2 + 0.08 - Math.cos(beat * 0.5) * 0.06;
 
         const singOpen = 0.65 + Math.abs(Math.sin(beat * 1.5 + index * 0.7)) * 0.95;
         mouthGroup.scale.set(1 + Math.sin(beat * 0.5) * 0.12, singOpen, 1);
 
         switch (index) {
           case 0: {
-            // 1. RM — "Intro: Persona / Dionysus"
             const bounce = Math.abs(Math.sin(beat * 0.5));
             pelvis.position.y = 0.94 - bounce * 0.08;
             pelvis.position.x = Math.sin(beat * 0.25) * 0.12;
             spine.rotation.y = Math.sin(beat * 0.5) * 0.28;
             spine.rotation.x = 0.08 + bounce * 0.08;
             headGroup.rotation.x = Math.sin(beat) * 0.16;
-            headGroup.rotation.y = -spine.rotation.y * 0.5;
 
             rightArm.shoulder.rotation.set(-1.15 + Math.sin(beat * 0.5) * 0.15, -0.25, -0.2);
             rightArm.elbow.rotation.x = -1.25 + Math.cos(beat) * 0.2;
-
-            leftArm.shoulder.rotation.set(-0.85 + Math.sin(beat) * 0.45, 0.2, 0.35 + Math.cos(beat * 0.5) * 0.25);
+            leftArm.shoulder.rotation.set(-0.85 + Math.sin(beat) * 0.45, 0.2, 0.35);
             leftArm.elbow.rotation.x = -0.9 + Math.sin(beat) * 0.4;
-
-            leftLeg.hip.rotation.x = -0.22 - bounce * 0.2;
-            leftLeg.knee.rotation.x = 0.42 + bounce * 0.35;
-            rightLeg.hip.rotation.x = -0.15 + Math.cos(beat * 0.5) * 0.2;
-            rightLeg.knee.rotation.x = 0.3 + Math.abs(Math.cos(beat * 0.5)) * 0.3;
             break;
           }
-
           case 1: {
-            // 2. Jin — "Moon / The Astronaut" (Flying Kiss)
             const kissPhase = Math.sin(beat * 0.25);
             pelvis.position.y = 0.95 - Math.abs(Math.cos(beat * 0.5)) * 0.06;
             pelvis.rotation.y = Math.sin(beat * 0.25) * 0.45;
-            spine.rotation.z = Math.sin(beat * 0.5) * 0.1;
             headGroup.rotation.y = Math.cos(beat * 0.5) * 0.22;
-            headGroup.rotation.z = kissPhase > 0.5 ? 0.14 : 0;
 
             if (kissPhase > 0.3) {
               const extend = (kissPhase - 0.3) / 0.7;
               leftArm.shoulder.rotation.set(-1.35, 0.35 - extend * 0.6, 0.2 + extend * 0.5);
               leftArm.elbow.rotation.x = -1.55 + extend * 1.1;
             } else {
-              leftArm.shoulder.rotation.set(-0.5 + Math.sin(beat * 0.5) * 0.3, 0, 0.35);
+              leftArm.shoulder.rotation.set(-0.5, 0, 0.35);
               leftArm.elbow.rotation.x = -0.7;
             }
-
             rightArm.shoulder.rotation.set(-1.2, -0.3, -0.2);
-            rightArm.elbow.rotation.x = -1.3 + Math.sin(beat * 0.5) * 0.15;
-
-            leftLeg.hip.rotation.z = 0.08 + Math.max(0, Math.sin(beat * 0.5) * 0.18);
-            leftLeg.knee.rotation.x = 0.25 + Math.abs(Math.sin(beat * 0.5)) * 0.2;
-            rightLeg.hip.rotation.z = -0.08 + Math.min(0, Math.sin(beat * 0.5) * 0.18);
-            rightLeg.knee.rotation.x = 0.25 + Math.abs(Math.cos(beat * 0.5)) * 0.2;
-            break;
-          }
-
-          case 2: {
-            // 3. SUGA — "Haegeum / Daechwita"
-            const swagBounce = Math.abs(Math.sin(beat));
-            pelvis.position.y = 0.92 - swagBounce * 0.1;
-            pelvis.position.x = Math.sin(beat * 0.5) * 0.18;
-            spine.rotation.x = 0.14 + swagBounce * 0.08;
-            spine.rotation.z = Math.cos(beat * 0.5) * 0.16;
-            headGroup.rotation.x = 0.08 + Math.sin(beat) * 0.18;
-            headGroup.rotation.z = -spine.rotation.z * 0.8;
-
-            leftArm.shoulder.position.y = 0.54 + Math.sin(beat) * 0.035;
-            rightArm.shoulder.position.y = 0.54 - Math.sin(beat) * 0.035;
-
-            rightArm.shoulder.rotation.set(-1.05 + Math.cos(beat * 0.5) * 0.3, -0.2, -0.25);
-            rightArm.elbow.rotation.x = -1.1 + Math.sin(beat) * 0.25;
-
-            leftArm.shoulder.rotation.set(-0.7 + Math.sin(beat) * 0.5, 0.15, 0.4);
-            leftArm.elbow.rotation.x = -1.0 + Math.cos(beat) * 0.4;
-
-            leftLeg.hip.rotation.x = -0.28 + Math.sin(beat * 0.5) * 0.25;
-            leftLeg.knee.rotation.x = 0.5 + swagBounce * 0.3;
-            rightLeg.hip.rotation.x = -0.28 - Math.sin(beat * 0.5) * 0.25;
-            rightLeg.knee.rotation.x = 0.5 + swagBounce * 0.3;
-            break;
-          }
-
-          case 3: {
-            // 4. j-hope — "ON Dance Break / MORE"
-            const popSnap = Math.pow(Math.abs(Math.sin(beat)), 3);
-            pelvis.position.y = 0.94 + (popSnap > 0.6 ? 0.08 : -0.06);
-            pelvis.position.x = Math.cos(beat * 0.5) * 0.22;
-
-            spine.rotation.x = -0.12 * popSnap + 0.06;
-            spine.rotation.y = Math.sin(beat * 0.75) * 0.38;
-            spine.rotation.z = Math.cos(beat * 0.5) * 0.2;
-            headGroup.rotation.z = Math.sin(beat) * 0.2;
-
-            leftArm.shoulder.rotation.z = 1.25 + Math.sin(beat) * 0.45;
-            leftArm.shoulder.rotation.x = -0.4 + Math.cos(beat) * 0.4;
-            leftArm.elbow.rotation.z = Math.cos(beat - 0.8) * 0.65;
-            leftArm.elbow.rotation.x = -0.6 + Math.sin(beat) * 0.4;
-
-            rightArm.shoulder.rotation.set(-1.3 + Math.sin(beat) * 0.35, -0.2, -0.35);
-            rightArm.elbow.rotation.x = -1.15;
-
-            leftLeg.hip.rotation.x = -0.35 + Math.sin(beat) * 0.45;
-            leftLeg.knee.rotation.x = 0.65 + Math.cos(beat) * 0.35;
-            rightLeg.hip.rotation.x = -0.35 - Math.sin(beat) * 0.45;
-            rightLeg.knee.rotation.x = 0.65 - Math.cos(beat) * 0.35;
-            break;
-          }
-
-          case 4: {
-            // 5. Jimin — "Black Swan / Filter" (Body Roll Contemporâneo)
-            const wavePhase = beat * 0.5;
-            pelvis.position.z = Math.sin(wavePhase) * 0.12;
-            pelvis.position.y = 0.95 - Math.abs(Math.cos(wavePhase)) * 0.07;
-            pelvis.rotation.y = Math.sin(wavePhase * 0.5) * 0.75;
-            spine.rotation.x = Math.sin(wavePhase - 0.6) * 0.22;
-            spine.rotation.z = Math.cos(wavePhase) * 0.16;
-            headGroup.rotation.x = Math.sin(wavePhase - 1.2) * 0.24;
-            headGroup.rotation.y = Math.cos(wavePhase) * 0.28;
-
-            leftArm.shoulder.rotation.set(-2.1 + Math.sin(wavePhase) * 0.35, 0.35, 0.45);
-            leftArm.elbow.rotation.x = -1.65 + Math.cos(wavePhase) * 0.3;
-
-            rightArm.shoulder.rotation.set(-1.15, -0.25, -0.25);
-            rightArm.elbow.rotation.x = -1.25;
-
-            leftLeg.hip.rotation.x = -0.18 + Math.sin(wavePhase) * 0.28;
-            leftLeg.knee.rotation.x = 0.35 + Math.abs(Math.sin(wavePhase)) * 0.25;
-            rightLeg.hip.rotation.z = -0.15 - Math.abs(Math.cos(wavePhase)) * 0.22;
-            rightLeg.knee.rotation.x = 0.25;
-            break;
-          }
-
-          case 5: {
-            // 6. V — "Singularity / Slow Dancing"
-            const smoothBeat = beat * 0.5;
-            pelvis.position.x = Math.sin(smoothBeat) * 0.22;
-            pelvis.position.y = 0.95 - Math.abs(Math.sin(smoothBeat)) * 0.06;
-            pelvis.rotation.y = -Math.sin(smoothBeat) * 0.32;
-            spine.rotation.y = Math.cos(smoothBeat) * 0.25;
-            spine.rotation.z = Math.sin(smoothBeat) * 0.12;
-
-            headGroup.rotation.y = -0.25 + Math.sin(smoothBeat) * 0.2;
-            headGroup.rotation.z = 0.12 * Math.cos(smoothBeat);
-
-            rightArm.shoulder.rotation.set(-1.25 + Math.sin(smoothBeat) * 0.2, -0.28, -0.18);
             rightArm.elbow.rotation.x = -1.3;
-
-            leftArm.shoulder.rotation.set(-0.45 + Math.cos(smoothBeat) * 0.35, 0.2, 0.32);
-            leftArm.elbow.rotation.x = -0.85 + Math.sin(smoothBeat) * 0.35;
-
-            leftLeg.hip.rotation.z = Math.max(0, Math.sin(smoothBeat) * 0.22);
-            leftLeg.knee.rotation.x = 0.3 + Math.max(0, -Math.sin(smoothBeat) * 0.3);
-            rightLeg.hip.rotation.z = Math.min(0, Math.sin(smoothBeat) * 0.22);
-            rightLeg.knee.rotation.x = 0.3 + Math.max(0, Math.sin(smoothBeat) * 0.3);
             break;
           }
-
+          case 2: {
+            const swag = Math.abs(Math.sin(beat));
+            pelvis.position.y = 0.92 - swag * 0.1;
+            spine.rotation.x = 0.14 + swag * 0.08;
+            rightArm.shoulder.rotation.set(-1.05 + Math.cos(beat * 0.5) * 0.3, -0.2, -0.25);
+            rightArm.elbow.rotation.x = -1.1;
+            leftArm.shoulder.rotation.set(-0.7 + Math.sin(beat) * 0.5, 0.15, 0.4);
+            leftArm.elbow.rotation.x = -1.0;
+            break;
+          }
+          case 3: {
+            const pop = Math.pow(Math.abs(Math.sin(beat)), 3);
+            pelvis.position.y = 0.94 + (pop > 0.6 ? 0.08 : -0.06);
+            spine.rotation.y = Math.sin(beat * 0.75) * 0.38;
+            leftArm.shoulder.rotation.z = 1.25 + Math.sin(beat) * 0.45;
+            rightArm.shoulder.rotation.set(-1.3, -0.2, -0.35);
+            break;
+          }
+          case 4: {
+            const wave = beat * 0.5;
+            pelvis.position.y = 0.95 - Math.abs(Math.cos(wave)) * 0.07;
+            pelvis.rotation.y = Math.sin(wave * 0.5) * 0.75;
+            leftArm.shoulder.rotation.set(-2.1, 0.35, 0.45);
+            rightArm.shoulder.rotation.set(-1.15, -0.25, -0.25);
+            break;
+          }
+          case 5: {
+            const sm = beat * 0.5;
+            pelvis.position.x = Math.sin(sm) * 0.22;
+            headGroup.rotation.y = -0.25 + Math.sin(sm) * 0.2;
+            rightArm.shoulder.rotation.set(-1.25, -0.28, -0.18);
+            leftArm.shoulder.rotation.set(-0.45, 0.2, 0.32);
+            break;
+          }
           case 6: {
-            // 7. Jung Kook — "Standing Next to You / ON Center"
-            const glide = beat * 0.75;
-            pelvis.position.y = 0.94 + Math.abs(Math.sin(glide)) * 0.09;
-            pelvis.position.z = Math.sin(glide * 0.5) * 0.22;
-            spine.rotation.y = Math.sin(glide * 0.5) * 0.36;
-            spine.rotation.x = 0.08 * Math.cos(glide);
-            headGroup.rotation.x = Math.sin(glide) * 0.16;
-
-            rightArm.shoulder.rotation.set(-1.35 + Math.sin(glide) * 0.25, -0.25, -0.25);
-            rightArm.elbow.rotation.x = -1.25;
-
-            leftArm.shoulder.rotation.set(-1.1 + Math.cos(glide) * 0.55, 0.35, 0.4 + Math.sin(glide) * 0.4);
-            leftArm.elbow.rotation.x = -1.2 + Math.sin(glide) * 0.45;
-
-            leftLeg.hip.rotation.x = Math.sin(glide) * 0.48;
-            leftLeg.knee.rotation.x = 0.45 + Math.max(0, -Math.sin(glide) * 0.55);
-            leftLeg.ankle.rotation.x = Math.cos(glide) * 0.35;
-
-            rightLeg.hip.rotation.x = -Math.sin(glide) * 0.48;
-            rightLeg.knee.rotation.x = 0.45 + Math.max(0, Math.sin(glide) * 0.55);
-            rightLeg.ankle.rotation.x = -Math.cos(glide) * 0.35;
+            const gl = beat * 0.75;
+            pelvis.position.y = 0.94 + Math.abs(Math.sin(gl)) * 0.09;
+            rightArm.shoulder.rotation.set(-1.35, -0.25, -0.25);
+            leftArm.shoulder.rotation.set(-1.1, 0.35, 0.4);
             break;
           }
-
           default:
             break;
         }
 
-        // Física Secundária nas Mechas do Cabelo
         const headVel = Math.cos(beat + index) * 0.08;
         dynamicStrands.forEach((st) => {
           st.pivot.rotation.x = st.baseRotX + Math.abs(headVel) * 0.6 + Math.sin(beat + st.phase) * 0.04;
@@ -1063,7 +928,6 @@ export default function BtsStage3D() {
 
       laserBeams.forEach((b) => {
         b.mesh.rotation.z = Math.sin(t * 1.7 + b.phase) * 0.45;
-        b.mesh.rotation.x = Math.cos(t * 1.2 + b.phase) * 0.25;
       });
 
       fyaCircles.forEach((c, idx) => {
@@ -1108,7 +972,7 @@ export default function BtsStage3D() {
           : 'relative rounded-[32px]'
       }`}
     >
-      {/* Cabeçalho do Show */}
+      {/* Cabeçalho */}
       <div className="p-3.5 sm:px-6 bg-gradient-to-r from-[#2E1065] via-[#7F1D1D] to-[#1E1B4B] border-b border-white/15 flex flex-wrap items-center justify-between gap-2 shrink-0">
         <div>
           <h2 className="font-serif-romantic text-xl sm:text-2xl font-bold flex items-center gap-2">
@@ -1137,14 +1001,6 @@ export default function BtsStage3D() {
           </button>
 
           <button
-            onClick={() => setShowPlayer(!showPlayer)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#EF4444] hover:bg-[#DC2626] text-white transition cursor-pointer shadow-sm"
-          >
-            <Music className="w-3.5 h-3.5" />
-            <span>{showPlayer ? 'Ocultar Áudio' : 'Abrir Música FYA'}</span>
-          </button>
-
-          <button
             onClick={toggleFullscreen}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/15 hover:bg-white/25 text-white border border-white/25 transition cursor-pointer"
           >
@@ -1163,7 +1019,7 @@ export default function BtsStage3D() {
         </div>
       </div>
 
-      {/* Barra de Seleção Fancam Close-up nos 7 Integrantes */}
+      {/* Seleção Fancam */}
       <div className="px-3 py-2 bg-[#110921] border-b border-white/10 flex items-center gap-1.5 overflow-x-auto shrink-0">
         <button
           onClick={() => setFocusedMember(null)}
@@ -1193,14 +1049,14 @@ export default function BtsStage3D() {
         ))}
       </div>
 
-      {/* Área do Palco 3D */}
+      {/* Área 3D + Player Estilo Spotify / Apple Music */}
       <div className={`relative w-full ${isFullscreen ? 'flex-1 min-h-0' : 'h-[470px] sm:h-[540px]'}`}>
         <div
           ref={mountRef}
           className="w-full h-full touch-none select-none cursor-grab active:cursor-grabbing"
         />
 
-        {/* Overlay de Detalhes do Membro em Modo Fancam Close-Up */}
+        {/* Overlay de Detalhes Fancam */}
         {focusedMember && (
           <div className="absolute top-3 left-3 z-20 bg-black/80 backdrop-blur-md border border-[#A855F7]/60 rounded-2xl p-3.5 max-w-xs shadow-xl">
             <div className="flex items-center justify-between gap-3">
@@ -1224,42 +1080,50 @@ export default function BtsStage3D() {
           </div>
         )}
 
-        {/* Player Oficial do YouTube: BTS - FYA (https://www.youtube.com/watch?v=QWDayFgPDjQ) */}
-        {showPlayer && (
-          <div className="absolute bottom-3 right-3 z-20 bg-black/85 backdrop-blur-md border border-[#EF4444]/60 rounded-2xl p-2 shadow-2xl w-64 sm:w-72">
-            <div className="flex items-center justify-between px-1 pb-1.5 text-[11px] text-purple-200">
-              <span className="font-semibold text-white flex items-center gap-1">
-                <Flame className="w-3.5 h-3.5 text-[#EF4444]" /> BTS — “FYA” (Áudio Oficial)
-              </span>
-              <a
-                href="https://www.youtube.com/watch?v=QWDayFgPDjQ"
-                target="_blank"
-                rel="noreferrer"
-                className="text-[#F87171] hover:underline"
-              >
-                YouTube ↗
-              </a>
+        {/* WIDGET DE MÚSICA ESTILO SPOTIFY (SEM VÍDEO APARECENDO) */}
+        <div className="absolute bottom-3 right-3 z-20 bg-black/90 backdrop-blur-xl border border-white/15 rounded-2xl p-3 shadow-2xl w-68 sm:w-76">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#7F1D1D] to-[#9333EA] flex items-center justify-center shrink-0 shadow-md">
+              <Disc className={`w-6 h-6 text-white ${isPlayingMusic ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
             </div>
-            <div className="rounded-xl overflow-hidden aspect-video bg-black">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/QWDayFgPDjQ?autoplay=1&loop=1&playlist=QWDayFgPDjQ"
-                title="BTS - FYA"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-white truncate">BTS — “FYA”</p>
+              <p className="text-[11px] text-purple-300 truncate">World Tour Live Audio</p>
+
+              {/* Barra de Progresso Animada */}
+              <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
+                <div className={`h-full bg-gradient-to-r from-[#EF4444] to-[#A855F7] rounded-full ${isPlayingMusic ? 'w-3/5 animate-pulse' : 'w-1/3'}`} />
+              </div>
             </div>
+
+            {/* Botão Play / Pause */}
+            <button
+              onClick={() => setIsPlayingMusic(!isPlayingMusic)}
+              className="w-10 h-10 rounded-full bg-white hover:bg-purple-100 text-[#090D16] flex items-center justify-center shadow-lg transition transform hover:scale-105 shrink-0 cursor-pointer"
+            >
+              {isPlayingMusic ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+            </button>
           </div>
-        )}
+
+          {/* Iframe do YouTube oculto (1x1 pixel) apenas reproduzindo o áudio limpo em background */}
+          <div className="absolute opacity-0 pointer-events-none w-px h-px overflow-hidden">
+            <iframe
+              width="1"
+              height="1"
+              src={`https://www.youtube.com/embed/QWDayFgPDjQ?autoplay=1&loop=1&playlist=QWDayFgPDjQ&mute=${isPlayingMusic ? '0' : '1'}`}
+              title="BTS Audio"
+              allow="autoplay"
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Rodapé de Instruções */}
+      {/* Rodapé */}
       <div className="px-4 py-2.5 bg-[#080411] text-purple-200/90 border-t border-white/10 flex flex-wrap items-center justify-center gap-4 text-[11px] shrink-0">
-        <span>💜 Clique no nome de um membro acima para ver o rosto, cabelo e coreografia de perto (Fancam)</span>
+        <span>💜 Clique nos membros acima para ver a Fancam individual</span>
         <span className="inline-flex items-center gap-1">
-          <RotateCw className="w-3 h-3" /> Arraste para controlar o ângulo ou use a Câmera TV
+          <RotateCw className="w-3 h-3" /> Arraste para girar a câmera
         </span>
       </div>
     </div>
