@@ -14,11 +14,13 @@ import {
   Minimize2,
   Compass,
   Bookmark,
-  Quote
+  Quote,
+  Flame
 } from 'lucide-react';
 import { QUOTES, CATEGORIES, EYE_COMPLIMENTS } from './data/quotes';
 import { WhiteLilySVG, CornerGarlandSVG, FloatingPetals } from './components/LilyIllustrations';
 import Garden3D from './components/Garden3D';
+import BtsStage3D from './components/BtsStage3D';
 import { useDailyQuote } from './hooks/useDailyQuote';
 
 export default function App() {
@@ -39,7 +41,7 @@ export default function App() {
   const [eyeComplimentIndex, setEyeComplimentIndex] = useState(null);
   const [isBloomingAnim, setIsBloomingAnim] = useState(false);
 
-  const totalQuotes = QUOTES.length; // 500 citações
+  const totalQuotes = QUOTES.length;
   const isFavorite = state.favorites.includes(currentQuote.id);
   const progressCount = state.seenIds.length;
   const progressPercent = Math.min(100, Math.round((progressCount / totalQuotes) * 100));
@@ -312,6 +314,8 @@ export default function App() {
           />
         )}
 
+        {activeTab === 'bts' && <BtsStage3D />}
+
         {(activeTab === 'garden' || activeTab === 'favorites') && (
           <section className="space-y-4">
             <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 border border-[#E2E8F0] shadow-2xs">
@@ -428,53 +432,65 @@ export default function App() {
       </div>
 
       {!isPostcardMode && (
-        <nav className="fixed bottom-4 inset-x-0 z-30 max-w-lg mx-auto px-3">
-          <div className="bg-white/95 backdrop-blur-xl border border-[#CBD5E1] rounded-full shadow-[0_10px_30px_rgba(15,23,42,0.15)] p-1.5 grid grid-cols-4 gap-1">
+        <nav className="fixed bottom-4 inset-x-0 z-30 max-w-xl mx-auto px-2">
+          <div className="bg-white/95 backdrop-blur-xl border border-[#CBD5E1] rounded-full shadow-[0_10px_30px_rgba(15,23,42,0.15)] p-1.5 grid grid-cols-5 gap-1">
             <button
               onClick={() => setActiveTab('today')}
-              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1 py-2.5 px-2 rounded-full text-[11px] sm:text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'today'
                   ? 'bg-[#14532D] text-white shadow-xs'
                   : 'text-[#475569] hover:bg-[#F1F5F9]'
               }`}
             >
-              <Calendar className="w-4 h-4 shrink-0" />
+              <Calendar className="w-3.5 h-3.5 shrink-0" />
               <span className="truncate">Hoje</span>
             </button>
 
             <button
               onClick={() => setActiveTab('garden3d')}
-              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1 py-2.5 px-2 rounded-full text-[11px] sm:text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'garden3d'
                   ? 'bg-[#991B1B] text-white shadow-xs'
                   : 'text-[#475569] hover:bg-[#FEF2F2]'
               }`}
             >
-              <Flower2 className="w-4 h-4 shrink-0" />
-              <span className="truncate">Natal 3D 🎄</span>
+              <Flower2 className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Ilha 3D</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('bts')}
+              className={`flex items-center justify-center gap-1 py-2.5 px-2 rounded-full text-[11px] sm:text-xs font-semibold transition cursor-pointer ${
+                activeTab === 'bts'
+                  ? 'bg-[#7E22CE] text-white shadow-xs'
+                  : 'text-[#6B21A8] hover:bg-[#F3E8FF]'
+              }`}
+            >
+              <Flame className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">BTS 💜</span>
             </button>
 
             <button
               onClick={() => setActiveTab('garden')}
-              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1 py-2.5 px-2 rounded-full text-[11px] sm:text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'garden'
                   ? 'bg-[#14532D] text-white shadow-xs'
                   : 'text-[#475569] hover:bg-[#F1F5F9]'
               }`}
             >
-              <Compass className="w-4 h-4 shrink-0" />
+              <Compass className="w-3.5 h-3.5 shrink-0" />
               <span className="truncate">Lista ({progressCount})</span>
             </button>
 
             <button
               onClick={() => setActiveTab('favorites')}
-              className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-full text-xs font-semibold transition cursor-pointer ${
+              className={`flex items-center justify-center gap-1 py-2.5 px-2 rounded-full text-[11px] sm:text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'favorites'
                   ? 'bg-[#991B1B] text-white shadow-xs'
                   : 'text-[#475569] hover:bg-[#FEF2F2]'
               }`}
             >
-              <Bookmark className="w-4 h-4 shrink-0" />
+              <Bookmark className="w-3.5 h-3.5 shrink-0" />
               <span className="truncate">Salvas ({state.favorites.length})</span>
             </button>
           </div>
