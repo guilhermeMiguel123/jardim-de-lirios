@@ -12,13 +12,13 @@ import {
 } from 'lucide-react';
 
 const BTS_MEMBERS = [
-  { id: 'RM', name: 'RM', role: 'Leader & Main Rapper', choreoName: 'Intro: Persona & Dionysus Stadium Anthem', suitColor: '#09090B', shirtColor: '#F8FAFC', tieColor: '#991B1B', hairColor: '#E2E8F0', micColor: '#3B82F6', pos: [-3.8, 0, -0.3] },
-  { id: 'Jin', name: 'Jin', role: 'Vocalist & Visual', choreoName: 'Moon & Epiphany Global Icon Flow', suitColor: '#0F172A', shirtColor: '#FFFFFF', tieColor: '#1E293B', hairColor: '#1C1917', micColor: '#EC4899', pos: [-2.5, 0, 0.2] },
-  { id: 'SUGA', name: 'SUGA', role: 'Lead Rapper & Producer', choreoName: 'Haegeum & Mic Drop Swag Masterclass', suitColor: '#1E293B', shirtColor: '#0F172A', tieColor: '#DC2626', hairColor: '#09090B', micColor: '#52525B', pos: [-1.2, 0, -0.3] },
-  { id: 'jhope', name: 'j-hope', role: 'Main Dancer & Rapper', choreoName: 'ON Dance Break & High-Voltage Popping', suitColor: '#1F0B13', shirtColor: '#FFFFFF', tieColor: '#7F1D1D', hairColor: '#451A03', micColor: '#EF4444', pos: [0, 0, -0.6] },
-  { id: 'Jimin', name: 'Jimin', role: 'Main Dancer & Vocal', choreoName: 'Black Swan Contemporary Mastery', suitColor: '#334155', shirtColor: '#FFFFFF', tieColor: '#1E293B', hairColor: '#FACC15', micColor: '#F59E0B', pos: [1.2, 0, -0.3] },
-  { id: 'V', name: 'V', role: 'Vocalist & Visual', choreoName: 'Singularity Jazz Groove & Charisma', suitColor: '#181022', shirtColor: '#FFFBEB', tieColor: '#881337', hairColor: '#111827', micColor: '#10B981', pos: [2.5, 0, 0.2] },
-  { id: 'JungKook', name: 'Jung Kook', role: 'Main Vocal & Center', choreoName: 'Standing Next to You Center Power Stride', suitColor: '#05070E', shirtColor: '#FFFFFF', tieColor: '#111827', hairColor: '#1C1917', micColor: '#9333EA', pos: [3.8, 0, -0.3] },
+  { id: 'RM', name: 'RM', role: 'Leader & Main Rapper', suitColor: '#111827', shirtColor: '#F8FAFC', tieColor: '#991B1B', hairColor: '#E2E8F0', micColor: '#3B82F6', pos: [-4.2, 0, -0.3] },
+  { id: 'Jin', name: 'Jin', role: 'Vocalist & Visual', suitColor: '#0F172A', shirtColor: '#FFFFFF', tieColor: '#1E293B', hairColor: '#1C1917', micColor: '#EC4899', pos: [-2.8, 0, 0.2] },
+  { id: 'SUGA', name: 'SUGA', role: 'Lead Rapper & Producer', suitColor: '#1E293B', shirtColor: '#0F172A', tieColor: '#DC2626', hairColor: '#09090B', micColor: '#64748B', pos: [-1.4, 0, -0.3] },
+  { id: 'jhope', name: 'j-hope', role: 'Main Dancer & Rapper', suitColor: '#270E17', shirtColor: '#FFFFFF', tieColor: '#7F1D1D', hairColor: '#451A03', micColor: '#EF4444', pos: [0, 0, -0.5] },
+  { id: 'Jimin', name: 'Jimin', role: 'Main Dancer & Vocal', suitColor: '#334155', shirtColor: '#FFFFFF', tieColor: '#1E293B', hairColor: '#FACC15', micColor: '#F59E0B', pos: [1.4, 0, -0.3] },
+  { id: 'V', name: 'V', role: 'Vocalist & Visual', suitColor: '#1E1B2E', shirtColor: '#FFFBEB', tieColor: '#881337', hairColor: '#111827', micColor: '#10B981', pos: [2.8, 0, 0.2] },
+  { id: 'JungKook', name: 'Jung Kook', role: 'Main Vocal & Center', suitColor: '#030712', shirtColor: '#FFFFFF', tieColor: '#111827', hairColor: '#141417', micColor: '#9333EA', pos: [4.2, 0, -0.3] },
 ];
 
 export default function BtsStage3D() {
@@ -71,10 +71,10 @@ export default function BtsStage3D() {
     const height = container.clientHeight || 500;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color('#010003');
-    scene.fog = new THREE.FogExp2('#010003', 0.01);
+    scene.background = new THREE.Color('#020104');
+    scene.fog = new THREE.FogExp2('#020104', 0.009);
 
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 200);
+    const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 300);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height);
@@ -86,138 +86,138 @@ export default function BtsStage3D() {
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // Iluminação Cinematográfica de Estádio Real
-    const ambientLight = new THREE.AmbientLight('#F3E8FF', 1.4);
+    // Iluminação Estilo Console / Unreal Engine
+    const ambientLight = new THREE.AmbientLight('#E9D5FF', 1.3);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight('#FFFFFF', 3.2);
-    keyLight.position.set(4, 15, 10);
+    const keyLight = new THREE.DirectionalLight('#FFFFFF', 3.5);
+    keyLight.position.set(5, 18, 12);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 2048;
     keyLight.shadow.mapSize.height = 2048;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight('#D8B4FE', 2.5);
-    rimLight.position.set(0, 10, -10);
+    const rimLight = new THREE.DirectionalLight('#C084FC', 2.8);
+    rimLight.position.set(0, 12, -15);
     scene.add(rimLight);
 
-    const spotRed = new THREE.PointLight('#EF4444', 8.0, 30);
-    spotRed.position.set(-6, 5, 3);
+    const spotRed = new THREE.PointLight('#EF4444', 9.0, 40);
+    spotRed.position.set(-7, 6, 4);
     scene.add(spotRed);
 
-    const spotPurple = new THREE.PointLight('#A855F7', 8.0, 30);
-    spotPurple.position.set(6, 5, 3);
+    const spotPurple = new THREE.PointLight('#A855F7', 9.0, 40);
+    spotPurple.position.set(7, 6, 4);
     scene.add(spotPurple);
 
-    // Palco Principal Espelhado de Luxo
+    // Palco Principal de Luxo High-End PBR
     const stageGroup = new THREE.Group();
     scene.add(stageGroup);
 
     const stageFloor = new THREE.Mesh(
-      new THREE.CylinderGeometry(7.5, 8.2, 0.7, 64),
+      new THREE.CylinderGeometry(8.0, 8.8, 0.8, 64),
       new THREE.MeshPhysicalMaterial({
-        color: '#03050B',
+        color: '#03050A',
         roughness: 0.02,
         metalness: 0.98,
         clearcoat: 1.0,
         clearcoatRoughness: 0.02,
       })
     );
-    stageFloor.position.y = -0.35;
+    stageFloor.position.y = -0.4;
     stageFloor.receiveShadow = true;
     stageGroup.add(stageFloor);
 
-    // Anéis de LED super brilhantes
+    // Anéis de LED de Alta Intensidade
     const ledOuter = new THREE.Mesh(
-      new THREE.TorusGeometry(7.2, 0.06, 16, 100),
-      new THREE.MeshStandardMaterial({ color: '#EF4444', emissive: '#EF4444', emissiveIntensity: 3.0 })
+      new THREE.TorusGeometry(7.6, 0.065, 16, 100),
+      new THREE.MeshStandardMaterial({ color: '#EF4444', emissive: '#EF4444', emissiveIntensity: 3.5 })
     );
     ledOuter.rotation.x = Math.PI / 2;
     ledOuter.position.y = 0.01;
     stageGroup.add(ledOuter);
 
     const ledInner = new THREE.Mesh(
-      new THREE.TorusGeometry(5.2, 0.05, 16, 100),
-      new THREE.MeshStandardMaterial({ color: '#A855F7', emissive: '#9333EA', emissiveIntensity: 2.8 })
+      new THREE.TorusGeometry(5.6, 0.055, 16, 100),
+      new THREE.MeshStandardMaterial({ color: '#A855F7', emissive: '#9333EA', emissiveIntensity: 3.0 })
     );
     ledInner.rotation.x = Math.PI / 2;
     ledInner.position.y = 0.015;
     stageGroup.add(ledInner);
 
-    // Telão de Fundo de Alta Definição com os Símbolos "FYA"
+    // Telão de Fundo 4K Curvo com Logos FYA
     const bigBackdrop = new THREE.Mesh(
-      new THREE.BoxGeometry(14.0, 6.2, 0.3),
-      new THREE.MeshStandardMaterial({ color: '#010205', roughness: 0.1, metalness: 0.85 })
+      new THREE.BoxGeometry(15.0, 6.8, 0.35),
+      new THREE.MeshStandardMaterial({ color: '#010204', roughness: 0.1, metalness: 0.9 })
     );
-    bigBackdrop.position.set(0, 3.1, -4.5);
+    bigBackdrop.position.set(0, 3.4, -4.8);
     stageGroup.add(bigBackdrop);
 
-    [-2.8, 0, 2.8].forEach((cx) => {
+    [-3.0, 0, 3.0].forEach((cx) => {
       const redDisc = new THREE.Mesh(
-        new THREE.CircleGeometry(1.0, 48),
-        new THREE.MeshStandardMaterial({ color: '#DC2626', emissive: '#EF4444', emissiveIntensity: 2.2 })
+        new THREE.CircleGeometry(1.1, 48),
+        new THREE.MeshStandardMaterial({ color: '#DC2626', emissive: '#EF4444', emissiveIntensity: 2.5 })
       );
-      redDisc.position.set(cx, 3.1, -4.3);
+      redDisc.position.set(cx, 3.4, -4.55);
       stageGroup.add(redDisc);
     });
 
-    // --- PLATEIA DE ESTÁDIO IMERSIVA (BONEQUINHOS LOW POLY PULANDO COM ARMY BOMBS) ---
+    // --- PLATEIA DE ESTÁDIO COM MULTI-CAMADAS DE FÃS PULANDO ---
     const crowdGroup = new THREE.Group();
     scene.add(crowdGroup);
 
     const fanMeshGroups = [];
-    const fanBodyMat = new THREE.MeshStandardMaterial({ color: '#0F172A', roughness: 0.7 });
+    const fanBodyMat = new THREE.MeshStandardMaterial({ color: '#0F172A', roughness: 0.6 });
     const fanHeadMat = new THREE.MeshStandardMaterial({ color: '#FFEDE1', roughness: 0.4 });
-    const fanStickMat = new THREE.MeshStandardMaterial({ color: '#FFFFFF', emissive: '#C084FC', emissiveIntensity: 1.5 });
+    const fanStickMat = new THREE.MeshStandardMaterial({ color: '#FFFFFF', emissive: '#E879F9', emissiveIntensity: 1.8 });
 
-    for (let i = 0; i < 90; i++) {
-      const angle = (i / 90) * Math.PI * 2 + (Math.random() - 0.5) * 0.06;
-      const radius = 9.2 + (i % 3) * 1.8;
+    for (let i = 0; i < 110; i++) {
+      const angle = (i / 110) * Math.PI * 2 + (Math.random() - 0.5) * 0.05;
+      const radius = 10.0 + (i % 4) * 2.0;
       const tier = Math.floor(i / 30);
 
       const fanContainer = new THREE.Group();
       fanContainer.position.set(
         Math.cos(angle) * radius,
-        -0.3 + tier * 1.3,
-        Math.sin(angle) * radius - 1.5
+        -0.3 + tier * 1.4,
+        Math.sin(angle) * radius - 1.8
       );
 
-      const body = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.55, 0.18), fanBodyMat);
+      const body = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.58, 0.18), fanBodyMat);
       body.position.y = 0.28;
       fanContainer.add(body);
 
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.14, 8, 8), fanHeadMat);
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 12), fanHeadMat);
       head.position.y = 0.68;
       fanContainer.add(head);
 
-      const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.3, 6), fanHeadMat);
+      const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.32, 6), fanHeadMat);
       arm.position.set(0.2, 0.42, 0);
-      arm.rotation.z = -Math.PI / 3;
+      arm.rotation.z = -Math.PI / 2.5;
       fanContainer.add(arm);
 
-      const lightStick = new THREE.Mesh(new THREE.SphereGeometry(0.07, 8, 8), fanStickMat);
-      lightStick.position.set(0.32, 0.58, 0);
+      const lightStick = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), fanStickMat);
+      lightStick.position.set(0.36, 0.58, 0);
       fanContainer.add(lightStick);
 
       crowdGroup.add(fanContainer);
       fanMeshGroups.push({
         group: fanContainer,
         baseY: fanContainer.position.y,
-        speed: 7.0 + Math.random() * 3.0,
+        speed: 7.5 + Math.random() * 3.0,
       });
     }
 
     const stageLasers = [];
-    [-6.0, -3.0, 0, 3.0, 6.0].forEach((lx, i) => {
+    [-6.5, -3.2, 0, 3.2, 6.5].forEach((lx, i) => {
       const lMat = new THREE.MeshBasicMaterial({
         color: i % 2 === 0 ? '#C084FC' : '#F87171',
         transparent: true,
-        opacity: 0.3,
+        opacity: 0.35,
         side: THREE.DoubleSide,
         depthWrite: false,
       });
-      const lMesh = new THREE.Mesh(new THREE.ConeGeometry(0.85, 14, 16, 1, true), lMat);
-      lMesh.position.set(lx, 5.5, -3.8);
+      const lMesh = new THREE.Mesh(new THREE.ConeGeometry(0.85, 16, 16, 1, true), lMat);
+      lMesh.position.set(lx, 6.0, -4.0);
       scene.add(lMesh);
       stageLasers.push({ mesh: lMesh, phase: i * 0.5 });
     });
@@ -225,67 +225,67 @@ export default function BtsStage3D() {
     const dancerRigs = [];
     const clickableMeshes = [];
 
-    const skinMat = new THREE.MeshPhysicalMaterial({ color: '#FFEDE1', roughness: 0.28, clearcoat: 0.6 });
+    const skinMat = new THREE.MeshPhysicalMaterial({ color: '#FFEDE1', roughness: 0.25, clearcoat: 0.7 });
     const eyeMat = new THREE.MeshBasicMaterial({ color: '#18181B' });
     const lipMat = new THREE.MeshBasicMaterial({ color: '#E15B64' });
-    const shoeMat = new THREE.MeshStandardMaterial({ color: '#050507', roughness: 0.15 });
+    const shoeMat = new THREE.MeshStandardMaterial({ color: '#030305', roughness: 0.15 });
 
-    // CONSTRUÇÃO DOS 7 INTEGRANTES COM ALTA DEFINIÇÃO E PROPORÇÕES DE PALCO REAL
+    // CONSTRUÇÃO DOS 7 INTEGRANTES POLIDOS EM 3D (ESTILO JOGO AAA)
     BTS_MEMBERS.forEach((m) => {
       const root = new THREE.Group();
       root.position.set(m.pos[0], m.pos[1], m.pos[2]);
 
       const spot = new THREE.Mesh(
         new THREE.CircleGeometry(0.75, 32),
-        new THREE.MeshBasicMaterial({ color: m.micColor, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
+        new THREE.MeshBasicMaterial({ color: m.micColor, transparent: true, opacity: 0.5, side: THREE.DoubleSide })
       );
       spot.rotation.x = -Math.PI / 2;
       spot.position.y = 0.02;
       root.add(spot);
 
-      const suitMat = new THREE.MeshPhysicalMaterial({ color: m.suitColor, roughness: 0.2, metalness: 0.4, clearcoat: 0.9 });
-      const shirtMat = new THREE.MeshStandardMaterial({ color: m.shirtColor, roughness: 0.2 });
-      const tieMat = new THREE.MeshStandardMaterial({ color: m.tieColor, roughness: 0.2 });
-      const hairMat = new THREE.MeshStandardMaterial({ color: m.hairColor, roughness: 0.25 });
+      const suitMat = new THREE.MeshPhysicalMaterial({ color: m.suitColor, roughness: 0.18, metalness: 0.5, clearcoat: 0.9 });
+      const shirtMat = new THREE.MeshStandardMaterial({ color: m.shirtColor, roughness: 0.15 });
+      const tieMat = new THREE.MeshStandardMaterial({ color: m.tieColor, roughness: 0.15 });
+      const hairMat = new THREE.MeshStandardMaterial({ color: m.hairColor, roughness: 0.2 });
 
       const bodyGroup = new THREE.Group();
       root.add(bodyGroup);
 
       const pelvis = new THREE.Group();
-      pelvis.position.y = 0.92;
+      pelvis.position.y = 0.94;
       bodyGroup.add(pelvis);
 
-      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.18, 0.56, 16), suitMat);
-      torso.position.y = 0.28;
+      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.18, 0.58, 16), suitMat);
+      torso.position.y = 0.29;
       torso.castShadow = true;
       torso.userData = { memberId: m.id };
       clickableMeshes.push(torso);
       pelvis.add(torso);
 
-      const shirt = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.36), shirtMat);
-      shirt.position.set(0, 0.28, 0.135);
+      const shirt = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.38), shirtMat);
+      shirt.position.set(0, 0.29, 0.14);
       pelvis.add(shirt);
 
-      const tie = new THREE.Mesh(new THREE.PlaneGeometry(0.06, 0.28), tieMat);
-      tie.position.set(0, 0.26, 0.14);
+      const tie = new THREE.Mesh(new THREE.PlaneGeometry(0.06, 0.3), tieMat);
+      tie.position.set(0, 0.27, 0.145);
       pelvis.add(tie);
 
-      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.068, 0.072, 0.15, 12), skinMat);
-      neck.position.set(0, 0.61, 0);
+      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.068, 0.072, 0.16, 12), skinMat);
+      neck.position.set(0, 0.63, 0);
       pelvis.add(neck);
 
       const headGroup = new THREE.Group();
-      headGroup.position.set(0, 0.77, 0);
+      headGroup.position.set(0, 0.8, 0);
       pelvis.add(headGroup);
 
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.215, 24, 24), skinMat);
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.215, 32, 32), skinMat);
       head.castShadow = true;
       head.userData = { memberId: m.id };
       clickableMeshes.push(head);
       headGroup.add(head);
 
       [-0.068, 0.068].forEach((ox) => {
-        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.023, 12, 12), eyeMat);
+        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.023, 16, 16), eyeMat);
         eye.position.set(ox, 0.03, 0.185);
         headGroup.add(eye);
       });
@@ -294,26 +294,27 @@ export default function BtsStage3D() {
       mouth.position.set(0, -0.065, 0.2);
       headGroup.add(mouth);
 
-      const hair = new THREE.Mesh(new THREE.SphereGeometry(0.23, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.65), hairMat);
+      // Cabelo Estilizado Volumoso K-Pop (Alta Definição)
+      const hair = new THREE.Mesh(new THREE.SphereGeometry(0.235, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.65), hairMat);
       hair.position.set(0, 0.04, -0.02);
-      hair.scale.set(1.03, 1.12, 1.06);
+      hair.scale.set(1.04, 1.15, 1.07);
       headGroup.add(hair);
 
       const createArm = (isRight) => {
         const side = isRight ? 1 : -1;
         const shoulder = new THREE.Group();
-        shoulder.position.set(side * 0.28, 0.52, 0);
+        shoulder.position.set(side * 0.28, 0.54, 0);
         pelvis.add(shoulder);
 
-        const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.058, 0.048, 0.5, 12), suitMat);
-        upperArm.position.y = -0.25;
+        const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.058, 0.048, 0.52, 12), suitMat);
+        upperArm.position.y = -0.26;
         upperArm.castShadow = true;
         shoulder.add(upperArm);
 
         if (isRight) {
           const mic = new THREE.Mesh(
             new THREE.CapsuleGeometry(0.016, 0.14, 8, 8),
-            new THREE.MeshStandardMaterial({ color: m.micColor, emissive: m.micColor, emissiveIntensity: 1.5, metalness: 0.9 })
+            new THREE.MeshStandardMaterial({ color: m.micColor, emissive: m.micColor, emissiveIntensity: 1.5, metalness: 0.95 })
           );
           mic.position.set(0, -0.52, 0.08);
           mic.rotation.x = Math.PI / 2;
@@ -331,13 +332,13 @@ export default function BtsStage3D() {
         hip.position.set(side * 0.11, 0, 0);
         pelvis.add(hip);
 
-        const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.065, 0.88, 12), suitMat);
-        leg.position.y = -0.44;
+        const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.065, 0.92, 12), suitMat);
+        leg.position.y = -0.46;
         leg.castShadow = true;
         hip.add(leg);
 
         const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.115, 0.075, 0.24), shoeMat);
-        shoe.position.set(0, -0.9, 0.04);
+        shoe.position.set(0, -0.94, 0.04);
         hip.add(shoe);
 
         return hip;
@@ -363,7 +364,7 @@ export default function BtsStage3D() {
     let isDragging = false;
     let prevPos = { x: 0, y: 0 };
     let pointerDownPos = { x: 0, y: 0 };
-    let spherical = { theta: 0, phi: 1.25, radius: 9.2 }; // Câmera mais próxima e cinematográfica
+    let spherical = { theta: 0, phi: 1.25, radius: 8.5 };
 
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
@@ -407,7 +408,7 @@ export default function BtsStage3D() {
 
     const onWheel = (e) => {
       e.preventDefault();
-      spherical.radius = Math.max(3.5, Math.min(15, spherical.radius + e.deltaY * 0.01));
+      spherical.radius = Math.max(3.2, Math.min(14, spherical.radius + e.deltaY * 0.01));
     };
 
     const domElem = renderer.domElement;
@@ -416,25 +417,25 @@ export default function BtsStage3D() {
     window.addEventListener('pointerup', onPointerUp);
     domElem.addEventListener('wheel', onWheel, { passive: false });
 
-    // LOOP DE ANIMAÇÃO
+    // LOOP DE ANIMAÇÃO COM COREOGRAFIA FLUIDA DE ALTO NÍVEL
     let animFrameId;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animFrameId = requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
-      const beat = t * 7.5;
+      const beat = t * 7.8;
 
       const activeFocus = focusedMemberRef.current;
       if (activeFocus) {
         const tx = activeFocus.pos[0];
         const tz = activeFocus.pos[2];
-        camera.position.lerp(new THREE.Vector3(tx, 1.5, tz + 2.7), 0.08);
-        camera.lookAt(tx, 1.32, tz);
+        camera.position.lerp(new THREE.Vector3(tx, 1.5, tz + 2.6), 0.08);
+        camera.lookAt(tx, 1.35, tz);
       } else if (cameraModeRef.current === 'director') {
-        const panX = Math.sin(t * 0.3) * 2.5;
-        const panZ = 8.5 + Math.cos(t * 0.4) * 1.2;
-        camera.position.lerp(new THREE.Vector3(panX, 1.7, panZ), 0.05);
+        const panX = Math.sin(t * 0.3) * 2.2;
+        const panZ = 7.8 + Math.cos(t * 0.4) * 1.0;
+        camera.position.lerp(new THREE.Vector3(panX, 1.6, panZ), 0.05);
         camera.lookAt(0, 1.25, 0);
       } else {
         const cx = spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta);
@@ -447,7 +448,7 @@ export default function BtsStage3D() {
       dancerRigs.forEach((rig, index) => {
         const { pelvis, torso, headGroup, leftArm, rightArm, leftLeg, rightLeg, spot } = rig;
 
-        spot.scale.setScalar(1 + Math.sin(beat + index) * 0.12);
+        spot.scale.setScalar(1 + Math.sin(beat + index) * 0.15);
 
         const energy = Math.abs(Math.sin(beat * 0.5 + index * 0.4));
         pelvis.position.y = 0.9 - energy * 0.12;
@@ -456,19 +457,19 @@ export default function BtsStage3D() {
         headGroup.rotation.y = -torso.rotation.y * 0.75;
         headGroup.rotation.x = Math.sin(beat + index) * 0.14;
 
-        rightArm.rotation.x = -1.35 + Math.sin(beat + index) * 0.8;
-        leftArm.rotation.x = -1.15 - Math.cos(beat + index) * 0.7;
+        rightArm.rotation.x = -1.35 + Math.sin(beat + index) * 0.85;
+        leftArm.rotation.x = -1.15 - Math.cos(beat + index) * 0.75;
 
-        leftLeg.rotation.x = Math.sin(beat * 0.5 + index) * 0.48;
-        rightLeg.rotation.x = -Math.sin(beat * 0.5 + index) * 0.48;
+        leftLeg.rotation.x = Math.sin(beat * 0.5 + index) * 0.5;
+        rightLeg.rotation.x = -Math.sin(beat * 0.5 + index) * 0.5;
       });
 
       fanMeshGroups.forEach((fan, idx) => {
-        fan.group.position.y = (-0.3 + Math.floor(idx / 30) * 1.3) + Math.abs(Math.sin(t * fan.speed)) * 0.35;
+        fan.group.position.y = (-0.3 + Math.floor(idx / 30) * 1.4) + Math.abs(Math.sin(t * fan.speed)) * 0.38;
       });
 
       stageLasers.forEach((l) => {
-        l.mesh.rotation.z = Math.sin(t * 1.8 + l.phase) * 0.55;
+        l.mesh.rotation.z = Math.sin(t * 1.8 + l.phase) * 0.6;
       });
 
       renderer.render(scene, camera);
@@ -513,7 +514,7 @@ export default function BtsStage3D() {
             <span>BTS — “FYA” Stadium Tour Stage 💜</span>
           </h2>
           <p className="text-[11px] sm:text-xs text-purple-200">
-            Enquadramento Cinematográfico • Integrantes em Primeira Fila • Vídeo Real do YouTube ✨
+            Gráficos Polidos AAA • Câmera Cinematográfica • Vídeo Oficial do YouTube ✨
           </p>
         </div>
 
@@ -621,7 +622,7 @@ export default function BtsStage3D() {
               <span className="font-semibold text-white flex items-center gap-1">
                 <Flame className="w-3.5 h-3.5 text-[#EF4444]" /> BTS — “FYA” (YouTube Oficial)
               </span>
-              <span className="text-[10px] text-purple-300">Pule anúncios direto no vídeo ⏭️</span>
+              <span className="text-[10px] text-purple-300">Pule anúncios no vídeo ⏭️</span>
             </div>
             <div className="rounded-xl overflow-hidden aspect-video bg-black shadow-inner">
               <iframe
@@ -639,7 +640,7 @@ export default function BtsStage3D() {
       </div>
 
       <div className="px-4 py-2.5 bg-[#080411] text-purple-200/90 border-t border-white/10 flex flex-wrap items-center justify-center gap-4 text-[11px] shrink-0">
-        <span>💜 Enquadramento de primeira fila • Vídeo oficial do YouTube acoplado</span>
+        <span>💜 Gráficos polidos estilo jogo AAA • Vídeo do YouTube integrado</span>
         <span className="inline-flex items-center gap-1">
           <RotateCw className="w-3 h-3" /> Arraste para girar a câmera
         </span>
