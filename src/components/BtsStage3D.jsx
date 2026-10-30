@@ -21,7 +21,7 @@ const BTS_MEMBERS = [
     lapelColor: '#09090B',
     shirtColor: '#F8FAFC',
     tieColor: '#991B1B',
-    hairColor: '#D4D4D8', // Platinado Silver
+    hairColor: '#D4D4D8',
     hairStyle: 'sweptBack',
     eyeColor: '#271C19',
     micColor: '#3B82F6',
@@ -38,7 +38,7 @@ const BTS_MEMBERS = [
     lapelColor: '#1E293B',
     shirtColor: '#FFFFFF',
     tieColor: '#1E293B',
-    hairColor: '#1C1917', // Preto natural elegante
+    hairColor: '#1C1917',
     hairStyle: 'foreheadComma',
     eyeColor: '#1F1614',
     micColor: '#EC4899',
@@ -55,7 +55,7 @@ const BTS_MEMBERS = [
     lapelColor: '#090D16',
     shirtColor: '#0F172A',
     tieColor: '#DC2626',
-    hairColor: '#09090B', // Wavy Black longo
+    hairColor: '#09090B',
     hairStyle: 'wavyLong',
     eyeColor: '#1C1614',
     micColor: '#27272A',
@@ -72,7 +72,7 @@ const BTS_MEMBERS = [
     lapelColor: '#09090B',
     shirtColor: '#FFFFFF',
     tieColor: '#7F1D1D',
-    hairColor: '#3E2723', // Castanho escuro estilizado
+    hairColor: '#3E2723',
     hairStyle: 'twoBlock',
     eyeColor: '#261815',
     micColor: '#EF4444',
@@ -89,7 +89,7 @@ const BTS_MEMBERS = [
     lapelColor: '#0F172A',
     shirtColor: '#FFFFFF',
     tieColor: '#1E293B',
-    hairColor: '#EAB308', // Loiro Dourado Sedoso
+    hairColor: '#EAB308',
     hairStyle: 'silkyParted',
     eyeColor: '#291D18',
     micColor: '#F59E0B',
@@ -106,7 +106,7 @@ const BTS_MEMBERS = [
     lapelColor: '#09090B',
     shirtColor: '#FFFBEB',
     tieColor: '#881337',
-    hairColor: '#18181B', // Mullet / Perm ondulado
+    hairColor: '#18181B',
     hairStyle: 'wavyPerm',
     eyeColor: '#1B1412',
     micColor: '#10B981',
@@ -123,7 +123,7 @@ const BTS_MEMBERS = [
     lapelColor: '#000000',
     shirtColor: '#FFFFFF',
     tieColor: '#111827',
-    hairColor: '#141417', // Undercut ondulado moderno
+    hairColor: '#141417',
     hairStyle: 'modernWave',
     eyeColor: '#1A1311',
     micColor: '#9333EA',
@@ -140,7 +140,7 @@ export default function BtsStage3D() {
   const [focusedMember, setFocusedMember] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showPlayer, setShowPlayer] = useState(true);
-  const [cameraMode, setCameraMode] = useState('director'); // 'director' | 'free'
+  const [cameraMode, setCameraMode] = useState('director');
 
   const focusedMemberRef = useRef(null);
   const cameraModeRef = useRef('director');
@@ -183,23 +183,21 @@ export default function BtsStage3D() {
     const container = mountRef.current;
     if (!container) return;
 
+    const width = container.clientWidth || 800;
+    const height = container.clientHeight || 500;
+
     // 1. CENA E RENDERIZADOR HIGH-DEFINITION
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#05020A');
     scene.fog = new THREE.FogExp2('#05020A', 0.018);
 
-    const camera = new THREE.PerspectiveCamera(
-      40,
-      container.clientWidth / container.clientHeight,
-      0.1,
-      150
-    );
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 150);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       powerPreference: 'high-performance',
     });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -208,18 +206,17 @@ export default function BtsStage3D() {
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // 2. ILUMINAÇÃO CINEMATOGRÁFICA DE SHOW (Key, Fill, Rim Light + Spotlights)
-    const ambientLight = new THREE.AmbientLight('#F3E8FF', 1.25);
+    // 2. ILUMINAÇÃO CINEMATOGRÁFICA DE SHOW
+    const ambientLight = new THREE.AmbientLight('#F3E8FF', 1.3);
     scene.add(ambientLight);
 
     const keyLight = new THREE.DirectionalLight('#FFFDF9', 2.2);
     keyLight.position.set(4, 14, 12);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 2048;
-    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    // Rim Light traseira para destacar a silhueta e o brilho dos cabelos
     const backRimLight = new THREE.DirectionalLight('#C084FC', 1.8);
     backRimLight.position.set(0, 8, -10);
     scene.add(backRimLight);
@@ -232,7 +229,7 @@ export default function BtsStage3D() {
     purpleStageLight.position.set(6, 5, 3);
     scene.add(purpleStageLight);
 
-    // 3. PALCO DE ARENA ESPELHADO + TELÃO CURVO "FYA"
+    // 3. PALCO DE ARENA ESPELHADO + TELÃO "FYA"
     const stageGroup = new THREE.Group();
     scene.add(stageGroup);
 
@@ -250,7 +247,6 @@ export default function BtsStage3D() {
     stageFloor.receiveShadow = true;
     stageGroup.add(stageFloor);
 
-    // Anéis de LED embutidos no piso
     const outerLedRing = new THREE.Mesh(
       new THREE.TorusGeometry(8.9, 0.07, 16, 100),
       new THREE.MeshStandardMaterial({
@@ -275,7 +271,6 @@ export default function BtsStage3D() {
     innerLedRing.position.y = 0.015;
     stageGroup.add(innerLedRing);
 
-    // Telão Traseiro de Alta Definição com os 3 Símbolos Vermelhos de "FYA"
     const backdropMesh = new THREE.Mesh(
       new THREE.BoxGeometry(15.5, 6.2, 0.35),
       new THREE.MeshStandardMaterial({ color: '#05070E', roughness: 0.3, metalness: 0.5 })
@@ -319,7 +314,6 @@ export default function BtsStage3D() {
       fyaCircles.push(symbolGroup);
     });
 
-    // Canhões de Laser Dinâmicos
     const laserBeams = [];
     const beamGeo = new THREE.ConeGeometry(0.7, 13, 24, 1, true);
     [-6.0, -3.0, 0, 3.0, 6.0].forEach((lx, i) => {
@@ -336,7 +330,7 @@ export default function BtsStage3D() {
       laserBeams.push({ mesh: beam, phase: i * 0.8 });
     });
 
-    // 4. GERADOR DE CABELOS DETALHADOS EM MECHAS (HIGH-POLY STRAND SYSTEM)
+    // 4. GERADOR DE CABELOS EM MECHAS (HIGH-POLY STRAND SYSTEM)
     const createDetailedIdolHair = (style, colorHex) => {
       const hairGroup = new THREE.Group();
       const hairMat = new THREE.MeshPhysicalMaterial({
@@ -347,7 +341,6 @@ export default function BtsStage3D() {
         clearcoatRoughness: 0.25,
       });
 
-      // Base craniana densa e suave
       const scalp = new THREE.Mesh(
         new THREE.SphereGeometry(0.242, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.62),
         hairMat
@@ -357,42 +350,37 @@ export default function BtsStage3D() {
       hairGroup.add(scalp);
 
       const dynamicStrands = [];
-
-      // Camada de 26 mechas esculpidas ao redor da cabeça + franja coreana estilizada
       const strandCount = 26;
+
       for (let i = 0; i < strandCount; i++) {
         const angle = (i / strandCount) * Math.PI * 2;
         const isFront = Math.cos(angle) > 0.25;
         const isBack = Math.cos(angle) < -0.3;
 
         const strandPivot = new THREE.Group();
-        const radiusX = 0.215;
-        const radiusZ = 0.225;
         strandPivot.position.set(
-          Math.sin(angle) * radiusX,
+          Math.sin(angle) * 0.215,
           0.11 + Math.sin(i * 1.7) * 0.02,
-          Math.cos(angle) * radiusZ
+          Math.cos(angle) * 0.225
         );
 
         let length = 0.22;
         let width = 0.058;
-        if (style === 'wavyLong' && isBack) length = 0.34; // SUGA cabelo longo na nuca
-        if (style === 'wavyPerm') width = 0.068; // V volume ondulado
-        if (style === 'sweptBack' && isFront) length = 0.18; // RM testa aparente
+        if (style === 'wavyLong' && isBack) length = 0.34;
+        if (style === 'wavyPerm') width = 0.068;
+        if (style === 'sweptBack' && isFront) length = 0.18;
 
         const strandGeo = new THREE.CapsuleGeometry(width, length, 8, 16);
         const strandMesh = new THREE.Mesh(strandGeo, hairMat);
         strandMesh.scale.set(1, 1, 0.42);
         strandMesh.position.y = -length * 0.42;
 
-        // Curvatura natural das mechas dependendo do penteado do membro
         strandPivot.rotation.y = angle;
         if (isFront) {
           if (style === 'sweptBack') {
             strandPivot.rotation.x = -0.55;
             strandPivot.rotation.z = (Math.sin(angle) > 0 ? 1 : -1) * 0.35;
           } else if (style === 'foreheadComma' || style === 'silkyParted') {
-            // Franja repartida em C ("Comma Hair" típico de Jin e Jimin)
             const side = Math.sin(angle) >= 0 ? 1 : -1;
             strandPivot.rotation.x = 0.28;
             strandPivot.rotation.z = side * 0.42;
@@ -450,7 +438,6 @@ export default function BtsStage3D() {
       root.position.set(m.pos[0], m.pos[1], m.pos[2]);
       root.scale.setScalar(m.heightScale);
 
-      // Spotlight no chão com a cor do microfone do membro
       const floorSpot = new THREE.Mesh(
         new THREE.CircleGeometry(0.82, 32),
         new THREE.MeshBasicMaterial({
@@ -479,7 +466,6 @@ export default function BtsStage3D() {
       const shirtMat = new THREE.MeshStandardMaterial({ color: m.shirtColor, roughness: 0.35 });
       const tieMat = new THREE.MeshStandardMaterial({ color: m.tieColor, roughness: 0.3 });
 
-      // Pélvis / Centro de Gravidade
       const pelvis = new THREE.Group();
       pelvis.position.y = 0.96;
       root.add(pelvis);
@@ -488,7 +474,6 @@ export default function BtsStage3D() {
       hipsMesh.scale.set(1.25, 0.8, 0.85);
       pelvis.add(hipsMesh);
 
-      // Coluna & Tórax Articulado
       const spine = new THREE.Group();
       spine.position.y = 0.1;
       pelvis.add(spine);
@@ -501,7 +486,6 @@ export default function BtsStage3D() {
       clickableMeshes.push(chestMesh);
       spine.add(chestMesh);
 
-      // Camisa Social, Lapelas de Cetim e Gravata
       const shirtFront = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.08, 0.42, 16), shirtMat);
       shirtFront.position.set(0, 0.38, 0.11);
       shirtFront.scale.set(1, 1, 0.6);
@@ -519,7 +503,6 @@ export default function BtsStage3D() {
         spine.add(lapel);
       });
 
-      // Pescoço e Cabeça Expressiva High-Poly
       const neck = new THREE.Group();
       neck.position.y = 0.68;
       spine.add(neck);
@@ -532,7 +515,6 @@ export default function BtsStage3D() {
       headGroup.position.y = 0.24;
       neck.add(headGroup);
 
-      // Rosto esculpido com mandíbula suave em V (V-line idol jaw)
       const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.23, 32, 32), skinMat);
       headMesh.scale.set(0.92, 1.08, 0.95);
       headMesh.castShadow = true;
@@ -540,7 +522,6 @@ export default function BtsStage3D() {
       clickableMeshes.push(headMesh);
       headGroup.add(headMesh);
 
-      // Orelhas + Brincos Prateados de Idol
       const earringMat = new THREE.MeshStandardMaterial({ color: '#E2E8F0', metalness: 0.9, roughness: 0.1 });
       [-1, 1].forEach((side) => {
         const ear = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), skinMat);
@@ -553,13 +534,11 @@ export default function BtsStage3D() {
         headGroup.add(earring);
       });
 
-      // Nariz Delicado 3D
       const nose = new THREE.Mesh(new THREE.ConeGeometry(0.028, 0.09, 16), skinMat);
       nose.position.set(0, -0.01, 0.22);
       nose.rotation.x = 0.18;
       headGroup.add(nose);
 
-      // Bochechas Coradas Suaves + Covinhas (RM)
       [-1, 1].forEach((side) => {
         const blush = new THREE.Mesh(new THREE.CircleGeometry(0.038, 16), blushMat);
         blush.position.set(side * 0.115, -0.04, 0.195);
@@ -576,7 +555,6 @@ export default function BtsStage3D() {
         }
       });
 
-      // Olhos Expressivos Completos (Esclera, Íris, Pupila, Brilho Catchlight, Pálpebras e Sobrancelhas)
       const irisMat = new THREE.MeshBasicMaterial({ color: m.eyeColor });
       const eyelids = [];
       const eyebrows = [];
@@ -599,21 +577,15 @@ export default function BtsStage3D() {
         pupil.position.z = 0.019;
         eyeSocket.add(pupil);
 
-        // Brilho Vivo no Olhar (Anime/Idol Catchlight)
         const catchlight = new THREE.Mesh(new THREE.CircleGeometry(0.0055, 12), scleraMat);
         catchlight.position.set(0.007, 0.007, 0.02);
         eyeSocket.add(catchlight);
 
-        // Delineado superior (Eyeliner)
-        const lashLine = new THREE.Mesh(
-          new THREE.BoxGeometry(0.068, 0.008, 0.01),
-          pupilMat
-        );
+        const lashLine = new THREE.Mesh(new THREE.BoxGeometry(0.068, 0.008, 0.01), pupilMat);
         lashLine.position.set(0, 0.022, 0.016);
         lashLine.rotation.z = side * -0.05;
         eyeSocket.add(lashLine);
 
-        // Pálpebra Móvel para Piscar e Piscadinha (Wink)
         const eyelid = new THREE.Mesh(
           new THREE.SphereGeometry(0.036, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.55),
           skinMat
@@ -623,7 +595,6 @@ export default function BtsStage3D() {
         eyeSocket.add(eyelid);
         eyelids.push(eyelid);
 
-        // Sobrancelha Articulada
         const brow = new THREE.Mesh(
           new THREE.CapsuleGeometry(0.01, 0.055, 8, 12),
           new THREE.MeshBasicMaterial({ color: m.hairColor === '#EAB308' ? '#713F12' : '#18181B' })
@@ -634,7 +605,6 @@ export default function BtsStage3D() {
         eyebrows.push({ mesh: brow, side });
       });
 
-      // Boca Articulada (Sorriso + Canto sincronizado)
       const mouthGroup = new THREE.Group();
       mouthGroup.position.set(0, -0.092, 0.206);
       headGroup.add(mouthGroup);
@@ -648,11 +618,9 @@ export default function BtsStage3D() {
       teethMesh.position.z = 0.009;
       mouthGroup.add(teethMesh);
 
-      // Cabelo High-Poly com Mechas Físicas
       const { hairGroup, dynamicStrands } = createDetailedIdolHair(m.hairStyle, m.hairColor);
       headGroup.add(hairGroup);
 
-      // BRAÇOS COM OMBRO, COTOVELO E MÃO ARTICULADOS
       const createArticulatedArm = (isRight) => {
         const side = isRight ? 1 : -1;
         const shoulder = new THREE.Group();
@@ -682,7 +650,6 @@ export default function BtsStage3D() {
         wrist.add(hand);
 
         if (isRight) {
-          // Microfone Customizado Brilhante na mão direita
           const micBody = new THREE.Mesh(
             new THREE.CapsuleGeometry(0.02, 0.18, 12, 16),
             new THREE.MeshStandardMaterial({
@@ -704,7 +671,6 @@ export default function BtsStage3D() {
       const leftArm = createArticulatedArm(false);
       const rightArm = createArticulatedArm(true);
 
-      // PERNAS COM QUADRIL, JOELHO E TORNOZELO ARTICULADOS
       const createArticulatedLeg = (isRight) => {
         const side = isRight ? 1 : -1;
         const hip = new THREE.Group();
@@ -847,9 +813,8 @@ export default function BtsStage3D() {
     const animate = () => {
       animFrameId = requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
-      const beat = t * 6.6; // Batida principal de FYA
+      const beat = t * 6.6;
 
-      // Controle de Câmera (Fancam Close-up no Rosto/Corpo ou Câmera Diretor Dinâmica)
       const activeFocus = focusedMemberRef.current;
       if (activeFocus) {
         const tx = activeFocus.pos[0];
@@ -876,7 +841,6 @@ export default function BtsStage3D() {
           index,
           pelvis,
           spine,
-          neck,
           headGroup,
           eyelids,
           eyebrows,
@@ -891,8 +855,6 @@ export default function BtsStage3D() {
 
         floorSpot.scale.setScalar(1 + Math.sin(beat + index) * 0.12);
 
-        // --- EXPRESSÕES FACIAIS VIVAS ---
-        // Piscar natural a cada poucos segundos + Piscadinha (Wink) no Jin e V
         const blinkCycle = (t * 0.9 + index * 1.3) % 4.5;
         const isBlinking = blinkCycle > 4.32;
         const isWinking = (index === 1 || index === 5) && Math.sin(beat * 0.25) > 0.85;
@@ -900,21 +862,18 @@ export default function BtsStage3D() {
         eyelids[0].scale.y = isBlinking ? 1.05 : 0.1;
         eyelids[1].scale.y = isBlinking || isWinking ? 1.05 : 0.1;
 
-        // Sobrancelhas dinâmicas (Carisma / Intensidade)
         const browLift = Math.sin(beat * 0.5 + index) * 0.008;
         eyebrows[0].mesh.position.y = 0.052 + browLift;
         eyebrows[1].mesh.position.y = 0.052 + (isWinking ? 0.012 : browLift);
         eyebrows[0].mesh.rotation.z = Math.PI / 2 - 0.08 + Math.cos(beat * 0.5) * 0.06;
         eyebrows[1].mesh.rotation.z = Math.PI / 2 + 0.08 - Math.cos(beat * 0.5) * 0.06;
 
-        // Canto e Sorriso Sincronizado com o Beat
         const singOpen = 0.65 + Math.abs(Math.sin(beat * 1.5 + index * 0.7)) * 0.95;
         mouthGroup.scale.set(1 + Math.sin(beat * 0.5) * 0.12, singOpen, 1);
 
-        // --- AS 7 COREOGRAFIAS ICÔNICAS DO BTS COM 16 ARTICULAÇÕES ---
         switch (index) {
           case 0: {
-            // 1. RM — "Intro: Persona / Dionysus" (Groove de Rap Pesado, Mão no Peito e Comando)
+            // 1. RM — "Intro: Persona / Dionysus"
             const bounce = Math.abs(Math.sin(beat * 0.5));
             pelvis.position.y = 0.94 - bounce * 0.08;
             pelvis.position.x = Math.sin(beat * 0.25) * 0.12;
@@ -923,15 +882,12 @@ export default function BtsStage3D() {
             headGroup.rotation.x = Math.sin(beat) * 0.16;
             headGroup.rotation.y = -spine.rotation.y * 0.5;
 
-            // Braço direito com microfone próximo à boca
             rightArm.shoulder.rotation.set(-1.15 + Math.sin(beat * 0.5) * 0.15, -0.25, -0.2);
             rightArm.elbow.rotation.x = -1.25 + Math.cos(beat) * 0.2;
 
-            // Braço esquerdo gesticulando no flow do rap
             leftArm.shoulder.rotation.set(-0.85 + Math.sin(beat) * 0.45, 0.2, 0.35 + Math.cos(beat * 0.5) * 0.25);
             leftArm.elbow.rotation.x = -0.9 + Math.sin(beat) * 0.4;
 
-            // Joelhos flexionando no groove
             leftLeg.hip.rotation.x = -0.22 - bounce * 0.2;
             leftLeg.knee.rotation.x = 0.42 + bounce * 0.35;
             rightLeg.hip.rotation.x = -0.15 + Math.cos(beat * 0.5) * 0.2;
@@ -940,7 +896,7 @@ export default function BtsStage3D() {
           }
 
           case 1: {
-            // 2. Jin — "Moon / The Astronaut" (Giro Elegante & Worldwide Handsome Flying Kiss)
+            // 2. Jin — "Moon / The Astronaut" (Flying Kiss)
             const kissPhase = Math.sin(beat * 0.25);
             pelvis.position.y = 0.95 - Math.abs(Math.cos(beat * 0.5)) * 0.06;
             pelvis.rotation.y = Math.sin(beat * 0.25) * 0.45;
@@ -948,7 +904,6 @@ export default function BtsStage3D() {
             headGroup.rotation.y = Math.cos(beat * 0.5) * 0.22;
             headGroup.rotation.z = kissPhase > 0.5 ? 0.14 : 0;
 
-            // Mão esquerda faz o gesto de mandar beijo (Flying Kiss) e depois abre
             if (kissPhase > 0.3) {
               const extend = (kissPhase - 0.3) / 0.7;
               leftArm.shoulder.rotation.set(-1.35, 0.35 - extend * 0.6, 0.2 + extend * 0.5);
@@ -969,7 +924,7 @@ export default function BtsStage3D() {
           }
 
           case 2: {
-            // 3. SUGA — "Haegeum / Daechwita" (Hip-Hop Bounce, Ombros Soltos & Mic Drop Gesture)
+            // 3. SUGA — "Haegeum / Daechwita"
             const swagBounce = Math.abs(Math.sin(beat));
             pelvis.position.y = 0.92 - swagBounce * 0.1;
             pelvis.position.x = Math.sin(beat * 0.5) * 0.18;
@@ -978,7 +933,6 @@ export default function BtsStage3D() {
             headGroup.rotation.x = 0.08 + Math.sin(beat) * 0.18;
             headGroup.rotation.z = -spine.rotation.z * 0.8;
 
-            // Jogo de ombros alternado (Shoulder Shrug)
             leftArm.shoulder.position.y = 0.54 + Math.sin(beat) * 0.035;
             rightArm.shoulder.position.y = 0.54 - Math.sin(beat) * 0.035;
 
@@ -996,18 +950,16 @@ export default function BtsStage3D() {
           }
 
           case 3: {
-            // 4. j-hope — "ON Dance Break / MORE" (Street Popping, Chest Pop & Arm Wave)
+            // 4. j-hope — "ON Dance Break / MORE"
             const popSnap = Math.pow(Math.abs(Math.sin(beat)), 3);
             pelvis.position.y = 0.94 + (popSnap > 0.6 ? 0.08 : -0.06);
             pelvis.position.x = Math.cos(beat * 0.5) * 0.22;
 
-            // Isolamento de Tórax (Chest Pop)
             spine.rotation.x = -0.12 * popSnap + 0.06;
             spine.rotation.y = Math.sin(beat * 0.75) * 0.38;
             spine.rotation.z = Math.cos(beat * 0.5) * 0.2;
             headGroup.rotation.z = Math.sin(beat) * 0.2;
 
-            // Onda fluida no braço esquerdo (Arm Wave)
             leftArm.shoulder.rotation.z = 1.25 + Math.sin(beat) * 0.45;
             leftArm.shoulder.rotation.x = -0.4 + Math.cos(beat) * 0.4;
             leftArm.elbow.rotation.z = Math.cos(beat - 0.8) * 0.65;
@@ -1016,7 +968,6 @@ export default function BtsStage3D() {
             rightArm.shoulder.rotation.set(-1.3 + Math.sin(beat) * 0.35, -0.2, -0.35);
             rightArm.elbow.rotation.x = -1.15;
 
-            // Passos dinâmicos de Street Dance
             leftLeg.hip.rotation.x = -0.35 + Math.sin(beat) * 0.45;
             leftLeg.knee.rotation.x = 0.65 + Math.cos(beat) * 0.35;
             rightLeg.hip.rotation.x = -0.35 - Math.sin(beat) * 0.45;
@@ -1025,10 +976,9 @@ export default function BtsStage3D() {
           }
 
           case 4: {
-            // 5. Jimin — "Black Swan / Filter" (Body Roll Contemporâneo, Giro & Mão no Cabelo)
+            // 5. Jimin — "Black Swan / Filter" (Body Roll Contemporâneo)
             const wavePhase = beat * 0.5;
-            // Onda corporal (Body Roll) subindo da pélvis para a cabeça
-            pelvis.position.z = m.pos[2] + Math.sin(wavePhase) * 0.12;
+            pelvis.position.z = Math.sin(wavePhase) * 0.12;
             pelvis.position.y = 0.95 - Math.abs(Math.cos(wavePhase)) * 0.07;
             pelvis.rotation.y = Math.sin(wavePhase * 0.5) * 0.75;
             spine.rotation.x = Math.sin(wavePhase - 0.6) * 0.22;
@@ -1036,7 +986,6 @@ export default function BtsStage3D() {
             headGroup.rotation.x = Math.sin(wavePhase - 1.2) * 0.24;
             headGroup.rotation.y = Math.cos(wavePhase) * 0.28;
 
-            // Mão esquerda passando graciosamente perto do cabelo loiro
             leftArm.shoulder.rotation.set(-2.1 + Math.sin(wavePhase) * 0.35, 0.35, 0.45);
             leftArm.elbow.rotation.x = -1.65 + Math.cos(wavePhase) * 0.3;
 
@@ -1051,7 +1000,7 @@ export default function BtsStage3D() {
           }
 
           case 5: {
-            // 6. V — "Singularity / Slow Dancing" (Groove R&B Suave, Charisma Gaze & Pose)
+            // 6. V — "Singularity / Slow Dancing"
             const smoothBeat = beat * 0.5;
             pelvis.position.x = Math.sin(smoothBeat) * 0.22;
             pelvis.position.y = 0.95 - Math.abs(Math.sin(smoothBeat)) * 0.06;
@@ -1059,7 +1008,6 @@ export default function BtsStage3D() {
             spine.rotation.y = Math.cos(smoothBeat) * 0.25;
             spine.rotation.z = Math.sin(smoothBeat) * 0.12;
 
-            // Olhar carismático inclinado para a câmera
             headGroup.rotation.y = -0.25 + Math.sin(smoothBeat) * 0.2;
             headGroup.rotation.z = 0.12 * Math.cos(smoothBeat);
 
@@ -1077,10 +1025,10 @@ export default function BtsStage3D() {
           }
 
           case 6: {
-            // 7. Jung Kook — "Standing Next to You / ON Center" (Moonwalk Glide & Center Power)
+            // 7. Jung Kook — "Standing Next to You / ON Center"
             const glide = beat * 0.75;
             pelvis.position.y = 0.94 + Math.abs(Math.sin(glide)) * 0.09;
-            pelvis.position.z = m.pos[2] + Math.sin(glide * 0.5) * 0.24;
+            pelvis.position.z = Math.sin(glide * 0.5) * 0.22;
             spine.rotation.y = Math.sin(glide * 0.5) * 0.36;
             spine.rotation.x = 0.08 * Math.cos(glide);
             headGroup.rotation.x = Math.sin(glide) * 0.16;
@@ -1088,11 +1036,9 @@ export default function BtsStage3D() {
             rightArm.shoulder.rotation.set(-1.35 + Math.sin(glide) * 0.25, -0.25, -0.25);
             rightArm.elbow.rotation.x = -1.25;
 
-            // Movimento de segurar a lapela do paletó (Jacket Flick) e abrir o braço
             leftArm.shoulder.rotation.set(-1.1 + Math.cos(glide) * 0.55, 0.35, 0.4 + Math.sin(glide) * 0.4);
             leftArm.elbow.rotation.x = -1.2 + Math.sin(glide) * 0.45;
 
-            // Moonwalk / Michael Jackson Footwork nos joelhos e tornozelos
             leftLeg.hip.rotation.x = Math.sin(glide) * 0.48;
             leftLeg.knee.rotation.x = 0.45 + Math.max(0, -Math.sin(glide) * 0.55);
             leftLeg.ankle.rotation.x = Math.cos(glide) * 0.35;
@@ -1107,7 +1053,7 @@ export default function BtsStage3D() {
             break;
         }
 
-        // --- FÍSICA SECUNDÁRIA DAS MECHAS DE CABELO ---
+        // Física Secundária nas Mechas do Cabelo
         const headVel = Math.cos(beat + index) * 0.08;
         dynamicStrands.forEach((st) => {
           st.pivot.rotation.x = st.baseRotX + Math.abs(headVel) * 0.6 + Math.sin(beat + st.phase) * 0.04;
@@ -1115,7 +1061,6 @@ export default function BtsStage3D() {
         });
       });
 
-      // Animação dos Lasers e do Telão FYA
       laserBeams.forEach((b) => {
         b.mesh.rotation.z = Math.sin(t * 1.7 + b.phase) * 0.45;
         b.mesh.rotation.x = Math.cos(t * 1.2 + b.phase) * 0.25;
@@ -1134,9 +1079,11 @@ export default function BtsStage3D() {
 
     const handleResize = () => {
       if (!container) return;
-      camera.aspect = container.clientWidth / container.clientHeight;
+      const w = container.clientWidth || 800;
+      const h = container.clientHeight || 500;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setSize(w, h);
     };
     window.addEventListener('resize', handleResize);
     setTimeout(handleResize, 60);
